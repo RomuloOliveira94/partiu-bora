@@ -1,11 +1,11 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "9baec30b-7c89-4bd1-b3b3-856a041e7ea9",
+  "id": "cd1e11b3-29bb-4ec6-8384-f482f223a6f1",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
-    "users": {
-      "name": "users",
+    "eventos": {
+      "name": "eventos",
       "columns": {
         "id": {
           "name": "id",
@@ -51,15 +51,15 @@
         }
       },
       "indexes": {
-        "users_link_publico_unique": {
-          "name": "users_link_publico_unique",
+        "eventos_link_publico_unique": {
+          "name": "eventos_link_publico_unique",
           "columns": [
             "link_publico"
           ],
           "isUnique": true
         },
-        "users_link_admin_unique": {
-          "name": "users_link_admin_unique",
+        "eventos_link_admin_unique": {
+          "name": "eventos_link_admin_unique",
           "columns": [
             "link_admin"
           ],

@@ -1,7 +1,7 @@
 import { relations } from "drizzle-orm";
 import { text, integer, sqliteTable } from "drizzle-orm/sqlite-core";
 
-export const eventos = sqliteTable("users", {
+export const eventos = sqliteTable("eventos", {
   id: integer("id").primaryKey(),
   nome: text("nome").notNull(),
   registranteNome: text("registrante_nome").notNull(),

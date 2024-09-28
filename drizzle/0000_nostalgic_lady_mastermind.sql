@@ -1,4 +1,4 @@
-CREATE TABLE `users` (
+CREATE TABLE `eventos` (
 	`id` integer PRIMARY KEY NOT NULL,
 	`nome` text NOT NULL,
 	`registrante_nome` text NOT NULL,
@@ -14,5 +14,5 @@ CREATE TABLE `participantes` (
 	`evento_id` integer NOT NULL
 );
 --> statement-breakpoint
-CREATE UNIQUE INDEX `users_link_publico_unique` ON `users` (`link_publico`);--> statement-breakpoint
-CREATE UNIQUE INDEX `users_link_admin_unique` ON `users` (`link_admin`);
+CREATE UNIQUE INDEX `eventos_link_publico_unique` ON `eventos` (`link_publico`);--> statement-breakpoint
+CREATE UNIQUE INDEX `eventos_link_admin_unique` ON `eventos` (`link_admin`);
