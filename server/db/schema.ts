@@ -1,12 +1,32 @@
-import { sql } from "drizzle-orm";
+import { relations } from "drizzle-orm";
 import { text, integer, sqliteTable } from "drizzle-orm/sqlite-core";
 
-export const users = sqliteTable("users", {
-  id: text("id"),
-  textModifiers: text("text_modifiers")
-    .notNull()
-    .default(sql`CURRENT_TIMESTAMP`),
-  intModifiers: integer("int_modifiers", { mode: "boolean" })
-    .notNull()
-    .default(false),
+export const eventos = sqliteTable("users", {
+  id: integer("id").primaryKey(),
+  nome: text("nome").notNull(),
+  registranteNome: text("registrante_nome").notNull(),
+  quantidadeMaxima: integer("quantidade_maxima"),
+  linkPublico: text("link_publico").unique().notNull(),
+  linkAdmin: text("link_admin").unique().notNull(),
 });
+
+export const eventosRelations = relations(eventos, ({ many }) => ({
+  participantes: many(participantes),
+}));
+
+export const participantes = sqliteTable("participantes", {
+  id: integer("id").primaryKey(),
+  nome: text("nome").notNull(),
+  telefone: text("telefone").notNull(),
+  eventoId: integer("evento_id").notNull(),
+});
+
+export const participantesRelations = relations(participantes, ({ one }) => ({
+  evento: one(eventos, {
+    fields: [participantes.eventoId],
+    references: [eventos.id],
+  }),
+}));
+
+export type Evento = typeof eventos.$inferSelect;
+export type Participante = typeof participantes.$inferSelect;
