@@ -4,7 +4,9 @@ CREATE TABLE `eventos` (
 	`registrante_nome` text NOT NULL,
 	`quantidade_maxima` integer,
 	`link_publico` text NOT NULL,
-	`link_admin` text NOT NULL
+	`link_admin` text NOT NULL,
+	`data` integer NOT NULL,
+	`data_da_criacao` integer NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE `participantes` (

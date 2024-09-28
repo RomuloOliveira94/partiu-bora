@@ -5,13 +5,13 @@
         class="flex flex-col items-start gap-4 md:flex-row md:items-center md:justify-between"
       >
         <div>
-          <h1 class="text-2xl font-bold text-green-400 sm:text-3xl">
-            Blog Posts
+          <h1 class="text-2xl font-bold sm:text-3xl">
+            Partiu Bora?
           </h1>
 
-          <p class="mt-1.5 text-sm text-green-400">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iure,
-            recusandae.
+          <p class="mt-1.5 text-sm">
+            Organize seus eventos de forma simples e rápida, e convide seus
+            amigos para participar.
           </p>
         </div>
 

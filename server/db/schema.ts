@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm";
-import { text, integer, sqliteTable } from "drizzle-orm/sqlite-core";
+import { text, integer, sqliteTable, numeric } from "drizzle-orm/sqlite-core";
 
 export const eventos = sqliteTable("eventos", {
   id: integer("id").primaryKey(),
@@ -8,6 +8,8 @@ export const eventos = sqliteTable("eventos", {
   quantidadeMaxima: integer("quantidade_maxima"),
   linkPublico: text("link_publico").unique().notNull(),
   linkAdmin: text("link_admin").unique().notNull(),
+  data: numeric("data").notNull(),
+  dataDaCriacao: numeric("data_da_criacao").notNull(),
 });
 
 export const eventosRelations = relations(eventos, ({ many }) => ({

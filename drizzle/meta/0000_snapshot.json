@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "cd1e11b3-29bb-4ec6-8384-f482f223a6f1",
+  "id": "d639fc4d-f31b-41fc-9064-a7a6e00cb154",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "eventos": {
@@ -45,6 +45,20 @@
         "link_admin": {
           "name": "link_admin",
           "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "data": {
+          "name": "data",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "data_da_criacao": {
+          "name": "data_da_criacao",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
