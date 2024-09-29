@@ -20,3 +20,12 @@ export const formatDateTime = (date: number | undefined) => {
     minute: "2-digit",
   });
 };
+
+export function gerarCorHexClara(): string {
+  const letras = "89ABCDEF"; // Usar apenas letras e números que geram cores mais claras
+  let cor = "#";
+  for (let i = 0; i < 6; i++) {
+    cor += letras[Math.floor(Math.random() * letras.length)];
+  }
+  return cor;
+}
