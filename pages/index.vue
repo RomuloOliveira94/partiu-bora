@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import type { FormSubmitEvent } from "#ui/types";
+  import { formatDateTime } from "~/helpers";
   import { vMaska } from "maska/vue";
   import * as v from "valibot";
 
@@ -18,6 +19,8 @@
     "https://picsum.photos/1920/1080?random=12",
   ];
 
+  const eventCreated = ref(false);
+
   const schema = v.object({
     evento: v.string("O nome do evento é obrigatório."),
     data: v.string("A data do evento é obrigatória."),
@@ -30,11 +33,11 @@
   type Schema = v.InferOutput<typeof schema>;
 
   const state = reactive({
-    evento: undefined,
-    data: undefined,
-    quantidadeMaxima: undefined,
-    registrante: undefined,
-    registranteWhatsApp: undefined,
+    evento: "",
+    data: "",
+    quantidadeMaxima: "",
+    registrante: "",
+    registranteWhatsApp: "",
     imageUrl: "",
   });
 
@@ -45,13 +48,25 @@
     });
 
     console.log(criar);
-  }
 
-  const selected = ref("sms");
+    if (criar.statusCode === 200) {
+      console.log("Evento criado com sucesso!");
+      eventCreated.value = true;
+      console.log(eventCreated.value);
+    }
+  }
 
   function handleSelect(item: string) {
     console.log(item);
     state.imageUrl = item;
+  }
+
+  function devButton() {
+    state.evento = "Evento teste";
+    state.data = "2022-12-31T23:59";
+    state.registrante = "Fulano";
+    state.registranteWhatsApp = "(99) 99999-9999";
+    state.imageUrl = items[0];
   }
 </script>
 
@@ -61,6 +76,7 @@
     <meta name="description" content="Home page" />
   </Head>
   <div>
+    <UButton @click="devButton">Preencher formulário</UButton>
     <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
       <div class="flex items-center flex-col md:flex-row gap-4 w-full">
         <UFormGroup label="Seu nome" name="registrante" class="w-full">
@@ -117,10 +133,7 @@
           v-maska="'######'"
         />
       </UFormGroup>
-      <UFormGroup
-        label="Imagem para o evento (opcional)"
-        name="imageUrl"
-      >
+      <UFormGroup label="Imagem para o evento (opcional)" name="imageUrl">
         <UCarousel v-slot="{ item }" :items="items" arrows>
           <img
             @click="handleSelect(item)"
@@ -134,5 +147,97 @@
 
       <UButton type="submit"> Criar Evento! </UButton>
     </UForm>
+
+    <UModal v-model="eventCreated">
+      <UCard
+        :ui="{
+          ring: '',
+          divide: 'divide-y divide-gray-100 dark:divide-gray-800',
+        }"
+      >
+        <template #header>
+          <div class="flex items-center justify-between">
+            <h2
+              class="text-base text-xl font-semibold leading-6 text-gray-900 dark:text-white"
+            >
+              Evento criado com sucesso!
+            </h2>
+            <UButton
+              color="gray"
+              variant="ghost"
+              icon="i-heroicons-x-mark-20-solid"
+              class="-my-1"
+              @click="eventCreated = false"
+            />
+          </div>
+        </template>
+        <div>
+          <div
+            class="flex items-center flex-col md:flex-row gap-2 bg-gray-800 p-4 rounded-md mb-6"
+          >
+            <img :src="state.imageUrl" class="rounded-md w-full md:w-44" />
+            <div>
+              <p class="mt-1.5">
+                O evento <strong>{{ state.evento }}</strong> foi criado com
+                sucesso!
+              </p>
+              <p class="mt-1.5">
+                Data: <strong>{{ formatDateTime(state.data) }}</strong>
+              </p>
+              <p class="mt-1.5">
+                Registrante: <strong>{{ state.registrante }}</strong>
+              </p>
+              <p class="mt-1.5">
+                WhatsApp: <strong>{{ state.registranteWhatsApp }}</strong>
+              </p>
+              <p class="mt-1.5">
+                Quantidade máxima de convidados:
+                <strong>{{ state.quantidadeMaxima }}</strong>
+              </p>
+            </div>
+          </div>
+
+          <div class="grid gap-2">
+            <h2 class="font-bold text-xl mb-4">Links para compartilhamento:</h2>
+            <div class="grid gap-2">
+              <p>
+                Código do evento para convidados: <strong>123456</strong>
+              </p>
+              Link para o evento (copiar):
+              <p class="truncate">
+                <strong>https://partiubora.vercel.app/evento/123456</strong>
+              </p>
+              <p>
+                Código do evento para Administrar: <strong>123456</strong>
+              </p>
+              Link para o evento:
+              <p class="truncate">
+                <strong>https://partiubora.vercel.app/admin/123456</strong>
+              </p>
+              <!-- <UButton
+              class="inline-block rounded px-3 py-3 text-sm font-medium text-white transition bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring"
+            >
+              WhatsApp
+            </UButton>
+            <UButton
+              class="inline-block rounded px-3 py-3 text-sm font-medium text-white transition bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring"
+            >
+              Telegram
+            </UButton>
+            <UButton
+              class="inline-block rounded px-3 py-3 text-sm font-medium text-white transition bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring"
+            >
+              Facebook
+            </UButton>
+            <UButton
+              class="inline-block rounded px-3 py-3 text-sm font-medium text-white transition bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring"
+            >
+              Twitter
+            </UButton> -->
+            </div>
+          </div>
+        </div>
+      </UCard>
+    </UModal>
   </div>
 </template>
