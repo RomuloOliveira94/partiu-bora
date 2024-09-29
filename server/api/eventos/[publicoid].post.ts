@@ -1,7 +1,15 @@
 import db from "~/server/db";
 import { NovoParticipante, participantes } from "~/server/db/schema";
 
-export default defineEventHandler(async (event) => {
+interface IBody {
+  data: {
+    nome: string;
+    telefone: string;
+    avatarUrl: string;
+  };
+}
+
+export default defineEventHandler<{ body: IBody }>(async (event) => {
   const publicoid = getRouterParam(event, "publicoid");
   const body = await readBody(event);
   console.log("Publicoid: ", publicoid);

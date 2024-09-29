@@ -64,10 +64,10 @@
         body: JSON.stringify(event),
       }
     );
-    console.log(body);
+
     if (status === 200) {
       showConfirmModal.value = false;
-      evento.value.evento.convidados.push({
+      evento.value?.evento?.convidados?.push({
         id: body.data.id,
         nome: body.data.nome,
         avatarUrl: body.data.avatarUrl,
