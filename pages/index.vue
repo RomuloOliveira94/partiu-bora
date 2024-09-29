@@ -23,14 +23,14 @@
   const eventCreated = ref(false);
   const eventCreatedData = reactive<Evento>({
     nome: "",
-    data: "",
+    data: 0,
     registranteNome: "",
     registranteWhatsApp: "",
     quantidadeMaxima: 0,
     linkPublico: "",
     linkAdmin: "",
     imageUrl: "",
-    dataDaCriacao: "",
+    dataDaCriacao: 0,
     id: 0,
   });
 
@@ -200,7 +200,7 @@
             class="flex items-center flex-col md:flex-row gap-2 bg-gray-800 p-4 rounded-md mb-6"
           >
             <img
-              :src="eventCreatedData.imageUrl"
+              :src="eventCreatedData.imageUrl || items[0]"
               class="rounded-md w-full md:w-44"
             />
             <div>

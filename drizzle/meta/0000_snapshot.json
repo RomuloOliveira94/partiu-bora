@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "8d79403e-2bdb-4d19-82d6-b0c8b7dd2408",
+  "id": "76a496d5-f849-4407-b300-998e77f4653c",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "eventos": {
@@ -65,14 +65,14 @@
         },
         "data": {
           "name": "data",
-          "type": "numeric",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
         "data_da_criacao": {
           "name": "data_da_criacao",
-          "type": "numeric",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false

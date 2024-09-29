@@ -10,8 +10,8 @@ export const eventos = sqliteTable("eventos", {
   quantidadeMaxima: integer("quantidade_maxima"),
   linkPublico: text("link_publico").unique().notNull(),
   linkAdmin: text("link_admin").unique().notNull(),
-  data: numeric("data").notNull(),
-  dataDaCriacao: numeric("data_da_criacao").notNull(),
+  data: integer("data").notNull(),
+  dataDaCriacao: integer("data_da_criacao").notNull(),
 });
 
 export const eventosRelations = relations(eventos, ({ many }) => ({
@@ -34,4 +34,6 @@ export const participantesRelations = relations(participantes, ({ one }) => ({
 }));
 
 export type Evento = typeof eventos.$inferSelect;
+export type NovoEvento = typeof eventos.$inferInsert;
 export type Participante = typeof participantes.$inferSelect;
+export type NovoParticipante = typeof participantes.$inferInsert;
