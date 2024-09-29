@@ -34,6 +34,7 @@
   const showConfirmModal = ref(false);
   const open = ref(true);
   const evento = ref(res);
+  const isPart = useCookie(`evento-${publicid.value}`);
 
   useSeoMeta({
     title: "Evento",
@@ -73,6 +74,7 @@
         avatarUrl: body.data.avatarUrl,
         telefone: body.data.telefone,
       });
+      isPart.value = "true";
     }
   }
   const items = ref([
@@ -136,7 +138,7 @@
         >
           <div>
             <h2
-              class="text-xl font-semibold leading-6 text-gray-900 dark:text-white"
+              class="text-2xl font-semibold leading-6 text-gray-900 dark:text-white"
             >
               {{ evento?.evento?.nome }}
             </h2>
@@ -156,7 +158,19 @@
             class="rounded-md w-full md:w-44"
           />
         </div>
+
+        <UAlert
+          v-if="isPart"
+          icon="i-heroicons-check-circle-20-solid"
+          title="Presença confirmada!"
+          color="primary"
+          variant="solid"
+          class="text-lg w-full mt-2 md:w-auto p-2"
+          :ui="{ title: 'text-lg', icon: { base: 'h-8 w-8' } }"
+        />
+
         <UButton
+          v-else
           color="primary"
           icon="i-heroicons-check-circle-20-solid"
           size="lg"
@@ -234,7 +248,17 @@
       </div>
       <template #footer>
         <div>
+          <UAlert
+            v-if="isPart"
+            icon="i-heroicons-check-circle-20-solid"
+            title="Presença confirmada!"
+            color="primary"
+            variant="solid"
+            class="text-lg w-full mt-2 md:w-auto p-2"
+            :ui="{ title: 'text-lg', icon: { base: 'h-8 w-8' } }"
+          />
           <UButton
+            v-else
             color="primary"
             icon="i-heroicons-check-circle-20-solid"
             size="lg"
