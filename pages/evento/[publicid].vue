@@ -27,6 +27,7 @@
   import { vMaska } from "maska/vue";
   import * as v from "valibot";
   const route = useRoute();
+  const toast = useToast();
 
   const publicid = ref(route.params.publicid);
   const { data: res } = useFetch<Response>(`/api/eventos/${publicid.value}`);
@@ -52,9 +53,9 @@
   type Schema = v.InferOutput<typeof schema>;
 
   const state = reactive({
-    nome: "",
-    telefone: "",
-    avatarUrl: "",
+    nome: undefined,
+    telefone: undefined,
+    avatarUrl: '',
   });
 
   async function onSubmit(event: FormSubmitEvent<Schema>) {
@@ -74,7 +75,23 @@
         avatarUrl: body.data.avatarUrl,
         telefone: body.data.telefone,
       });
-      isPart.value = "true";
+      //isPart.value = "true";
+      toast.add({
+        title: "Presença confirmada!",
+        description: "Obrigado por confirmar sua presença!",
+        icon: "i-heroicons-check-circle-20-solid",
+        timeout: 5000,
+      });
+    }
+
+    if (status === 404 || status === 500) {
+      toast.add({
+        title: "Erro",
+        description:
+          "Ocorreu um erro ao tentar confirmar sua presença, tente novamente.",
+        icon: "i-noto:face-with-diagonal-mouth",
+        timeout: 5000,
+      });
     }
   }
   const items = ref([
@@ -134,7 +151,7 @@
     <UCard>
       <template #header>
         <div
-          class="flex justify-between md:flex-row md:items-center flex-col gap-2"
+          class="md:flex md:justify-between md:flex-row md:items-center grid gap-2"
         >
           <div>
             <h2

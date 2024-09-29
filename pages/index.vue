@@ -197,11 +197,11 @@
         </template>
         <div>
           <div
-            class="flex items-center flex-col md:flex-row gap-2 bg-gray-800 p-4 rounded-md mb-6"
+            class="flex items-center flex-col md:flex-row gap-4 bg-gray-800 p-4 rounded-md mb-6"
           >
             <img
               :src="eventCreatedData.imageUrl || items[0]"
-              class="rounded-md w-full md:w-44"
+              class="rounded-md w-full md:w-[200px] md:h-[250px] object-cover"
             />
             <div>
               <p class="mt-1.5">

@@ -15,9 +15,10 @@
   <div>
     <Header />
     <NuxtLayout>
-      <div class="container mx-auto p-8">
+      <div class="container mx-auto p-8 min-h-screen z-50">
         <NuxtPage />
       </div>
+      <UNotifications />
     </NuxtLayout>
   </div>
 </template>
