@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "d639fc4d-f31b-41fc-9064-a7a6e00cb154",
+  "id": "8d79403e-2bdb-4d19-82d6-b0c8b7dd2408",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "eventos": {
@@ -28,6 +28,20 @@
           "notNull": true,
           "autoincrement": false
         },
+        "registrante_whatsapp": {
+          "name": "registrante_whatsapp",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "imagem_url": {
+          "name": "imagem_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
         "quantidade_maxima": {
           "name": "quantidade_maxima",
           "type": "integer",
@@ -51,14 +65,14 @@
         },
         "data": {
           "name": "data",
-          "type": "integer",
+          "type": "numeric",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
         "data_da_criacao": {
           "name": "data_da_criacao",
-          "type": "integer",
+          "type": "numeric",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
@@ -96,6 +110,13 @@
         },
         "nome": {
           "name": "nome",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "avatar_url": {
+          "name": "avatar_url",
           "type": "text",
           "primaryKey": false,
           "notNull": true,

@@ -5,6 +5,8 @@ export const eventos = sqliteTable("eventos", {
   id: integer("id").primaryKey(),
   nome: text("nome").notNull(),
   registranteNome: text("registrante_nome").notNull(),
+  registranteWhatsApp: text("registrante_whatsapp").notNull(),
+  imageUrl: text("imagem_url"),
   quantidadeMaxima: integer("quantidade_maxima"),
   linkPublico: text("link_publico").unique().notNull(),
   linkAdmin: text("link_admin").unique().notNull(),
@@ -19,6 +21,7 @@ export const eventosRelations = relations(eventos, ({ many }) => ({
 export const participantes = sqliteTable("participantes", {
   id: integer("id").primaryKey(),
   nome: text("nome").notNull(),
+  avatarUrl: text("avatar_url").notNull(),
   telefone: text("telefone").notNull(),
   eventoId: integer("evento_id").notNull(),
 });
