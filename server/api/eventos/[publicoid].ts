@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
 import db from "~/server/db";
-import { eventos } from "~/server/db/schema";
+import { eventos, participantes } from "~/server/db/schema";
 
 export default defineEventHandler(async (event) => {
   const publicoid = getRouterParam(event, "publicoid");
@@ -10,19 +10,28 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    const evento = await db
-      .select()
+    const resultado = await db
+      .select({
+        evento: eventos,
+        participantes: participantes,
+      })
       .from(eventos)
-      .where(eq(eventos.linkPublico, publicoid));
-    console.log(evento);
+      .leftJoin(participantes, eq(eventos.id, participantes.eventoId))
+      .where(eq(eventos.linkPublico, publicoid))
+      .all();
 
-    if (!evento.length) {
+    if (!resultado.length) {
       return { status: 404, body: { error: "Evento não encontrado" } };
     }
 
+    const evento = {
+      ...resultado[0].evento,
+      convidados: resultado.map((row) => row.participantes).filter(Boolean),
+    };
+
     return {
       status: 200,
-      evento: evento[0],
+      evento,
     };
   } catch (error) {
     console.error(error);

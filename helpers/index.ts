@@ -6,7 +6,11 @@ export const formatDate = (date: string) => {
   });
 };
 
-export const formatDateTime = (date: number) => {
+export const formatDateTime = (date: number | undefined) => {
+  if (!date) {
+    return "";
+  }
+
   return new Date(date).toLocaleString("pt-BR", {
     weekday: "long",
     day: "2-digit",

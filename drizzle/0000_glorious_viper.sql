@@ -16,7 +16,8 @@ CREATE TABLE `participantes` (
 	`nome` text NOT NULL,
 	`avatar_url` text NOT NULL,
 	`telefone` text NOT NULL,
-	`evento_id` integer NOT NULL
+	`evento_id` integer,
+	FOREIGN KEY (`evento_id`) REFERENCES `eventos`(`id`) ON UPDATE no action ON DELETE no action
 );
 --> statement-breakpoint
 CREATE UNIQUE INDEX `eventos_link_publico_unique` ON `eventos` (`link_publico`);--> statement-breakpoint

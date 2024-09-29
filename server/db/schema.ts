@@ -1,5 +1,4 @@
-import { relations } from "drizzle-orm";
-import { text, integer, sqliteTable, numeric } from "drizzle-orm/sqlite-core";
+import { text, integer, sqliteTable } from "drizzle-orm/sqlite-core";
 
 export const eventos = sqliteTable("eventos", {
   id: integer("id").primaryKey(),
@@ -14,24 +13,13 @@ export const eventos = sqliteTable("eventos", {
   dataDaCriacao: integer("data_da_criacao").notNull(),
 });
 
-export const eventosRelations = relations(eventos, ({ many }) => ({
-  participantes: many(participantes),
-}));
-
 export const participantes = sqliteTable("participantes", {
   id: integer("id").primaryKey(),
   nome: text("nome").notNull(),
   avatarUrl: text("avatar_url").notNull(),
   telefone: text("telefone").notNull(),
-  eventoId: integer("evento_id").notNull(),
+  eventoId: integer("evento_id").references(() => eventos.id),
 });
-
-export const participantesRelations = relations(participantes, ({ one }) => ({
-  evento: one(eventos, {
-    fields: [participantes.eventoId],
-    references: [eventos.id],
-  }),
-}));
 
 export type Evento = typeof eventos.$inferSelect;
 export type NovoEvento = typeof eventos.$inferInsert;

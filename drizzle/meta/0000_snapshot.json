@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "76a496d5-f849-4407-b300-998e77f4653c",
+  "id": "e8effce6-5357-475f-a158-0770c31353f3",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "eventos": {
@@ -133,12 +133,26 @@
           "name": "evento_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true,
+          "notNull": false,
           "autoincrement": false
         }
       },
       "indexes": {},
-      "foreignKeys": {},
+      "foreignKeys": {
+        "participantes_evento_id_eventos_id_fk": {
+          "name": "participantes_evento_id_eventos_id_fk",
+          "tableFrom": "participantes",
+          "tableTo": "eventos",
+          "columnsFrom": [
+            "evento_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     }
