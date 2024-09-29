@@ -1,11 +1,8 @@
 <script setup lang="ts">
-  import { formatDateTime } from "~/helpers";
-  import type { FormSubmitEvent } from "#ui/types";
-  import { vMaska } from "maska/vue";
-  import * as v from "valibot";
   interface Response {
     status: number;
     evento: {
+      id: number;
       nome: string;
       data: number;
       descricao: string;
@@ -25,13 +22,18 @@
       }[];
     };
   }
-
+  import { formatDateTime } from "~/helpers";
+  import type { FormSubmitEvent } from "#ui/types";
+  import { vMaska } from "maska/vue";
+  import * as v from "valibot";
   const route = useRoute();
+
   const publicid = ref(route.params.publicid);
+  const { data: res } = useFetch<Response>(`/api/eventos/${publicid.value}`);
+
   const showConfirmModal = ref(false);
   const open = ref(true);
-
-  const { data: res } = useFetch<Response>(`/api/eventos/${publicid.value}`);
+  const evento = ref(res);
 
   useSeoMeta({
     title: "Evento",
@@ -41,8 +43,9 @@
   });
 
   const schema = v.object({
-    nome: v.string("O nome é obrigatório."),
-    telefone: v.string("O telefone é obrigatório."),
+    nome: v.string("O seu nome é obrigatório."),
+    telefone: v.string("O seu WhatsApp é obrigatório."),
+    avatarUrl: v.optional(v.string()),
   });
 
   type Schema = v.InferOutput<typeof schema>;
@@ -53,59 +56,64 @@
     avatarUrl: "",
   });
 
-  const items = ref([
-    [
-      {
-        slot: "avatar",
-        label: "Avatar 1",
-        src: `https://ui-avatars.com/api/?name=SN&background=random`,
-        click: () => {
-          state.avatarUrl = `https://ui-avatars.com/api/?name=SN&background=random`;
-        },
-      },
-    ],
-    [
-      {
-        slot: "avatar",
-        label: "Avatar 1",
-        src: `https://api.dicebear.com/9.x/lorelei/svg?seed=Katherine`,
-        click: () => {
-          state.avatarUrl = `https://api.dicebear.com/9.x/lorelei/svg?seed=Katherine`;
-        },
-      },
-    ],
-    [
-      {
-        slot: "avatar",
-        label: "Avatar 1",
-        src: `https://api.dicebear.com/9.x/lorelei/svg?seed=Avery`,
-        click: () => {
-          state.avatarUrl = `https://api.dicebear.com/9.x/lorelei/svg?seed=Avery`;
-        },
-      },
-    ],
-    [
-      {
-        slot: "avatar",
-        label: "Avatar 1",
-        src: `https://ui-avatars.com/api/?name=SN&background=random`,
-      },
-    ],
-  ]);
-
   async function onSubmit(event: FormSubmitEvent<Schema>) {
-    /* const confirmar = await $fetch(`/api/eventos/${publicid.value}/confirmar`, {
-      method: "POST",
-      body: JSON.stringify(event),
-    });
-
-    if (confirmar.statusCode === 200) {
-      console.log("Presença confirmada com sucesso!");
-      console.log(confirmar);
+    const { body, status } = await $fetch(
+      `/api/eventos/${res.value?.evento.id}`,
+      {
+        method: "POST",
+        body: JSON.stringify(event),
+      }
+    );
+    console.log(body);
+    if (status === 200) {
       showConfirmModal.value = false;
-    } */
-    console.log(event);
+      evento.value.evento.convidados.push({
+        id: body.data.id,
+        nome: body.data.nome,
+        avatarUrl: body.data.avatarUrl,
+        telefone: body.data.telefone,
+      });
+    }
   }
+  const items = ref([
+    {
+      src: `https://ui-avatars.com/api/?name=SN&background=random`,
+    },
+
+    {
+      src: `https://api.dicebear.com/9.x/lorelei/svg?seed=Katherine`,
+    },
+    {
+      src: `https://api.dicebear.com/9.x/lorelei/svg?seed=Avery`,
+    },
+    {
+      src: `https://ui-avatars.com/api/?name=SN&background=random`,
+    },
+    {
+      src: `https://ui-avatars.com/api/?name=SN&background=random`,
+    },
+    {
+      src: `https://ui-avatars.com/api/?name=SN&background=random`,
+    },
+    {
+      src: `https://ui-avatars.com/api/?name=SN&background=random`,
+    },
+    {
+      src: `https://ui-avatars.com/api/?name=SN&background=random`,
+    },
+    {
+      src: `https://ui-avatars.com/api/?name=SN&background=random`,
+    },
+    {
+      src: `https://ui-avatars.com/api/?name=SN&background=random`,
+    },
+    {
+      src: `https://ui-avatars.com/api/?name=SN&background=random`,
+    },
+    {
+      src: `https://ui-avatars.com/api/?name=SN&background=random`,
+    },
+  ]);
 </script>
 
 <template>
@@ -130,20 +138,23 @@
             <h2
               class="text-xl font-semibold leading-6 text-gray-900 dark:text-white"
             >
-              {{ res?.evento?.nome }}
+              {{ evento?.evento?.nome }}
             </h2>
             <div class="flex items-center flex-wrap gap-2">
               <small
                 >Criado por:
-                <strong>{{ res?.evento?.registranteNome }}</strong></small
+                <strong>{{ evento?.evento?.registranteNome }}</strong></small
               >
               <small class="flex items-center gap-1"
                 ><UIcon name="i-logos:whatsapp-icon" class="w-4 h-4" />
-                {{ res?.evento?.registranteWhatsApp }}</small
+                {{ evento?.evento?.registranteWhatsApp }}</small
               >
             </div>
           </div>
-          <img :src="res?.evento?.imageUrl" class="rounded-md w-full md:w-44" />
+          <img
+            :src="evento?.evento?.imageUrl"
+            class="rounded-md w-full md:w-44"
+          />
         </div>
         <UButton
           color="primary"
@@ -192,7 +203,7 @@
           <h2 class="text-2xl">Convidados:</h2>
           <div class="grid lg:grid-cols-3 xl:grid-cols-4 gap-2 mt-4">
             <div
-              v-for="convidado in res?.evento?.convidados"
+              v-for="convidado in evento?.evento?.convidados"
               :key="convidado.id"
             >
               <UCard>
@@ -251,7 +262,7 @@
           class="space-y-4"
           @submit="onSubmit"
         >
-          <div class="flex items-center flex-col md:flex-row gap-4 w-full">
+          <div class="flex items-center flex-col gap-4 w-full">
             <UFormGroup label="Seu nome" name="registrante" class="w-full">
               <UInput
                 v-model="state.nome"
@@ -277,25 +288,40 @@
             <UFormGroup
               label="Avatar (opcional)"
               name="avatarUrl"
-              class="w-full"
+              class="self-start w-fit"
             >
-              <UDropdown :items="items" :popper="{ placement: 'right-start' }">
-                <UAvatar
-                  :src="
-                    state.avatarUrl
-                      ? state.avatarUrl
-                      : state.nome
-                      ? `https://ui-avatars.com/api/?name=${state.nome}&background=random`
-                      : `https://ui-avatars.com/api/?name=SN&background=random`
-                  "
-                  size="lg"
-                />
-                <template #avatar="{ item }">
-                  <div class="flex items-center gap-2">
-                    <UAvatar :src="item.src" size="lg" />
+              <UPopover :popper="{ arrow: true }" v-model:open="open">
+                <UButton
+                  color="white"
+                  trailing-icon="i-heroicons-chevron-down-20-solid"
+                >
+                  <UAvatar
+                    :src="
+                      state.avatarUrl
+                        ? state.avatarUrl
+                        : state.nome
+                        ? `https://ui-avatars.com/api/?name=${state.nome}&background=random`
+                        : `https://ui-avatars.com/api/?name=SN&background=random`
+                    "
+                    size="md"
+                  />
+                </UButton>
+
+                <template #panel>
+                  <div class="flex gap-2 p-4 items-center flex-wrap">
+                    <div v-for="(item, index) in items" :key="index">
+                      <UAvatar
+                        :src="item.src"
+                        size="md"
+                        @click="
+                          state.avatarUrl = item.src;
+                          open = false;
+                        "
+                      />
+                    </div>
                   </div>
                 </template>
-              </UDropdown>
+              </UPopover>
             </UFormGroup>
           </div>
           <UButton type="submit">Confirmar Presença!</UButton>
@@ -305,11 +331,4 @@
   </div>
 </template>
 
-<style scoped>
-  .modal-center {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-  }
-</style>
+<style scoped></style>
