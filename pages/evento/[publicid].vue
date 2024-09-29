@@ -55,7 +55,7 @@
   const state = reactive({
     nome: undefined,
     telefone: undefined,
-    avatarUrl: '',
+    avatarUrl: "",
   });
 
   async function onSubmit(event: FormSubmitEvent<Schema>) {
@@ -174,6 +174,10 @@
             :src="evento?.evento?.imageUrl"
             class="rounded-md w-full md:w-44"
           />
+          <p class="mt-1.5">
+            Data:
+            <strong>{{ formatDateTime(res?.evento?.data) }}</strong>
+          </p>
         </div>
 
         <UAlert
@@ -197,42 +201,16 @@
           Marcar Presença!
         </UButton>
       </template>
-      <div class="grid gap-4">
-        <div>
-          <div>
-            <p class="mt-1.5">
-              Data:
-              <strong>{{ formatDateTime(res?.evento?.data) }}</strong>
-            </p>
-            <!--  <p class="mt-1.5">
-              Descrição:
-              <strong>{{ res?.evento?.descricao }}</strong>
-            </p>
-            <p class="mt-1.5">
-              Local:
-              <strong>{{ res?.evento?.local }}</strong>
-            </p>
-            <p class="mt-1.5">
-              Endereço:
-              <strong>{{ res?.evento?.endereco }}</strong>
-            </p>
-            <p class="mt-1.5">
-              Cidade:
-              <strong>{{ res?.evento?.cidade }}</strong>
-            </p>
-            <p class="mt-1.5">
-              Estado:
-              <strong>{{ res?.evento?.estado }}</strong>
-            </p>
-            <p class="mt-1.5">
-              País:
-              <strong>{{ res?.evento?.pais }}</strong>
-            </p> -->
-          </div>
-        </div>
+      <div class="grid">
         <div>
           <h2 class="text-2xl">Convidados:</h2>
-          <div class="grid lg:grid-cols-3 xl:grid-cols-4 gap-2 mt-4">
+          <div
+            v-if="
+              evento?.evento?.convidados &&
+              evento?.evento?.convidados.length > 0
+            "
+            class="grid lg:grid-cols-3 xl:grid-cols-4 gap-2 mt-4"
+          >
             <div
               v-for="convidado in evento?.evento?.convidados"
               :key="convidado.id"
@@ -260,6 +238,16 @@
                 </div>
               </UCard>
             </div>
+          </div>
+          <div
+            v-if="
+              evento?.evento?.convidados &&
+              evento?.evento?.convidados.length <= 0
+            "
+          >
+            <h2 class="text-lg font-bold mt-4">
+              Nenhum convidado confirmado ainda, seja o primeiro a confirmar!
+            </h2>
           </div>
         </div>
       </div>
