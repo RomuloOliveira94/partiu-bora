@@ -200,16 +200,12 @@
           <div class="grid gap-2">
             <h2 class="font-bold text-xl mb-4">Links para compartilhamento:</h2>
             <div class="grid gap-2">
-              <p>
-                Código do evento para convidados: <strong>123456</strong>
-              </p>
+              <p>Código do evento para convidados: <strong>123456</strong></p>
               Link para o evento (copiar):
               <p class="truncate">
                 <strong>https://partiubora.vercel.app/evento/123456</strong>
               </p>
-              <p>
-                Código do evento para Administrar: <strong>123456</strong>
-              </p>
+              <p>Código do evento para Administrar: <strong>123456</strong></p>
               Link para o evento:
               <p class="truncate">
                 <strong>https://partiubora.vercel.app/admin/123456</strong>

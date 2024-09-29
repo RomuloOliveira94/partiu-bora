@@ -1,4 +1,4 @@
-export const formatDate = (date: Date) => {
+export const formatDate = (date: string) => {
   return new Date(date).toLocaleDateString("pt-BR", {
     day: "2-digit",
     month: "2-digit",
@@ -6,7 +6,7 @@ export const formatDate = (date: Date) => {
   });
 };
 
-export const formatDateTime = (date: Date) => {
+export const formatDateTime = (date: string) => {
   return new Date(date).toLocaleString("pt-BR", {
     weekday: "long",
     day: "2-digit",
