@@ -3,6 +3,7 @@
   import { formatDateTime } from "~/helpers";
   import { vMaska } from "maska/vue";
   import * as v from "valibot";
+  import type { Evento } from "~/server/db/schema";
 
   const items = [
     "https://picsum.photos/1920/1080?random=1",
@@ -20,6 +21,18 @@
   ];
 
   const eventCreated = ref(false);
+  const eventCreatedData = reactive<Evento>({
+    nome: "",
+    data: "",
+    registranteNome: "",
+    registranteWhatsApp: "",
+    quantidadeMaxima: 0,
+    linkPublico: "",
+    linkAdmin: "",
+    imageUrl: "",
+    dataDaCriacao: "",
+    id: 0,
+  });
 
   const schema = v.object({
     evento: v.string("O nome do evento é obrigatório."),
@@ -47,18 +60,28 @@
       body: JSON.stringify(event),
     });
 
-    console.log(criar);
-
     if (criar.statusCode === 200) {
       console.log("Evento criado com sucesso!");
+      console.log(criar);
+      eventCreatedData.nome = criar.body.data.nome;
+      eventCreatedData.data = criar.body.data.data;
+      eventCreatedData.registranteNome = criar.body.data.registranteNome;
+      eventCreatedData.registranteWhatsApp =
+        criar.body.data.registranteWhatsApp;
+      eventCreatedData.quantidadeMaxima = criar.body.data.quantidadeMaxima;
+      eventCreatedData.linkPublico = criar.body.data.linkPublico;
+      eventCreatedData.linkAdmin = criar.body.data.linkAdmin;
+      eventCreatedData.imageUrl = criar.body.data.imageUrl;
+      eventCreatedData.dataDaCriacao = criar.body.data.dataDaCriacao;
+      eventCreatedData.id = criar.body.data.id;
       eventCreated.value = true;
       console.log(eventCreated.value);
     }
   }
 
   function handleSelect(item: string) {
-    console.log(item);
     state.imageUrl = item;
+    console.log(item);
   }
 
   function devButton() {
@@ -67,6 +90,7 @@
     state.registrante = "Fulano";
     state.registranteWhatsApp = "(99) 99999-9999";
     state.imageUrl = items[0];
+    state.quantidadeMaxima = "112";
   }
 </script>
 
@@ -138,8 +162,8 @@
           <img
             @click="handleSelect(item)"
             :src="item"
-            class="cursor-pointer border-2 border-transparent hover:border-green-500 rounded-md mx-1 md:w-[500px] w-[250px] h-full"
-            :class="{ 'border-green-500': item === state.imageUrl }"
+            :class="item === state.imageUrl ? 'border-2 border-green-500' : ''"
+            class="cursor-pointer hover:border-green-500 hover:border-2 rounded-md mx-1 md:w-[450px] w-[250px] h-full"
             draggable="false"
           />
         </UCarousel>
@@ -158,7 +182,7 @@
         <template #header>
           <div class="flex items-center justify-between">
             <h2
-              class="text-base text-xl font-semibold leading-6 text-gray-900 dark:text-white"
+              class="text-xl font-semibold leading-6 text-gray-900 dark:text-white"
             >
               Evento criado com sucesso!
             </h2>
@@ -175,24 +199,29 @@
           <div
             class="flex items-center flex-col md:flex-row gap-2 bg-gray-800 p-4 rounded-md mb-6"
           >
-            <img :src="state.imageUrl" class="rounded-md w-full md:w-44" />
+            <img
+              :src="eventCreatedData.imageUrl"
+              class="rounded-md w-full md:w-44"
+            />
             <div>
               <p class="mt-1.5">
-                O evento <strong>{{ state.evento }}</strong> foi criado com
-                sucesso!
+                O evento <strong>{{ eventCreatedData.nome }}</strong> foi criado
+                com sucesso!
               </p>
               <p class="mt-1.5">
-                Data: <strong>{{ formatDateTime(state.data) }}</strong>
+                Data:
+                <strong>{{ formatDateTime(eventCreatedData.data) }}</strong>
               </p>
               <p class="mt-1.5">
-                Registrante: <strong>{{ state.registrante }}</strong>
+                Registrante: <strong>{{ eventCreatedData.registranteNome }}</strong>
               </p>
               <p class="mt-1.5">
-                WhatsApp: <strong>{{ state.registranteWhatsApp }}</strong>
+                WhatsApp:
+                <strong>{{ eventCreatedData.registranteWhatsApp }}</strong>
               </p>
               <p class="mt-1.5">
                 Quantidade máxima de convidados:
-                <strong>{{ state.quantidadeMaxima }}</strong>
+                <strong>{{ eventCreatedData.quantidadeMaxima }}</strong>
               </p>
             </div>
           </div>

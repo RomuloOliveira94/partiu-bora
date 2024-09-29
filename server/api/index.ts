@@ -43,7 +43,7 @@ export default defineEventHandler<{ body: IBody }>(async (event) => {
   console.log("Imagem: ", imageUrl);
   console.log("Timestamp: ", dataTimestamp);
 
-  const createEvent = await db
+  const created = await db
     .insert(eventos)
     .values({
       nome,
@@ -56,17 +56,22 @@ export default defineEventHandler<{ body: IBody }>(async (event) => {
       linkAdmin,
       dataDaCriacao,
     })
-    .execute();
+    .returning();
 
-  if (!createEvent) {
+  if (!created) {
     return {
       statusCode: 500,
       body: "Erro ao criar evento",
     };
   }
 
+  console.log(created);
+
   return {
     statusCode: 200,
-    body: "Evento criado com sucesso!",
+    body: {
+      message: "Evento criado com sucesso",
+      data: created[0],
+    },
   };
 });
