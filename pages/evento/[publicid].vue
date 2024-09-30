@@ -100,15 +100,15 @@
                 {{ evento?.evento?.registranteWhatsApp }}</small
               >
             </div>
+            <p class="mt-1.5">
+              Data:
+              <strong>{{ formatDateTime(res?.evento?.data) }}</strong>
+            </p>
           </div>
           <img
             :src="evento?.evento?.imageUrl"
             class="rounded-md w-full md:w-44"
           />
-          <p class="mt-1.5">
-            Data:
-            <strong>{{ formatDateTime(res?.evento?.data) }}</strong>
-          </p>
         </div>
 
         <UAlert
