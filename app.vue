@@ -13,6 +13,7 @@
 
 <template>
   <div>
+    <NuxtLoadingIndicator />
     <Header />
     <NuxtLayout>
       <div class="container mx-auto p-8 min-h-screen z-50">
