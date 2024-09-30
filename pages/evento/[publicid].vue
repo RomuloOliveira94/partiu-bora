@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import useFetchPublicEvent from "~/composables/UseFetchPublicEvent";
+  import { gerarAvataresAleatorios } from "~/helpers/static";
   import { formatDateTime } from "~/helpers";
   import type { FormSubmitEvent } from "#ui/types";
   import { vMaska } from "maska/vue";
@@ -25,45 +26,11 @@
     }`,
   });
 
-  const items = ref([
-    {
-      src: `https://ui-avatars.com/api/?name=SN&background=random`,
-    },
+  const items = ref(gerarAvataresAleatorios(24));
 
-    {
-      src: `https://api.dicebear.com/9.x/lorelei/svg?seed=Katherine`,
-    },
-    {
-      src: `https://api.dicebear.com/9.x/lorelei/svg?seed=Avery`,
-    },
-    {
-      src: `https://ui-avatars.com/api/?name=SN&background=random`,
-    },
-    {
-      src: `https://ui-avatars.com/api/?name=SN&background=random`,
-    },
-    {
-      src: `https://ui-avatars.com/api/?name=SN&background=random`,
-    },
-    {
-      src: `https://ui-avatars.com/api/?name=SN&background=random`,
-    },
-    {
-      src: `https://ui-avatars.com/api/?name=SN&background=random`,
-    },
-    {
-      src: `https://ui-avatars.com/api/?name=SN&background=random`,
-    },
-    {
-      src: `https://ui-avatars.com/api/?name=SN&background=random`,
-    },
-    {
-      src: `https://ui-avatars.com/api/?name=SN&background=random`,
-    },
-    {
-      src: `https://ui-avatars.com/api/?name=SN&background=random`,
-    },
-  ]);
+  const handleRefreshAvatars = () => {
+    items.value = gerarAvataresAleatorios(24);
+  };
 </script>
 
 <template>
@@ -149,9 +116,11 @@
               <UCard>
                 <div class="flex items-center justify-between">
                   <div>
-                    <p>
-                      Nome:
-                      <strong>{{ convidado.nome }}</strong>
+                    <p class="w-full">
+                      <span class="block">
+                        Nome:
+                      </span>
+                      <strong>{{ convidado.nome.slice(0, 18) }}</strong>
                     </p>
                     <p class="mt-1.5 flex items-center gap-1">
                       <UIcon name="i-logos:whatsapp-icon" class="w-4 h-4" />
@@ -164,7 +133,7 @@
                         ? convidado.avatarUrl
                         : `https://ui-avatars.com/api/?name=${convidado.nome}&background=random`
                     "
-                    size="lg"
+                    size="xl"
                   />
                 </div>
               </UCard>
@@ -229,6 +198,8 @@
                 type="text"
                 size="sm"
                 icon="i-heroicons-user-circle-16-solid"
+                maxlength="18"
+                minlength="3"
               />
             </UFormGroup>
             <UFormGroup
@@ -243,6 +214,8 @@
                 icon="i-heroicons-phone"
                 v-maska="'(##) #####-####'"
                 placeholder="(99) 99999-9999"
+                maxlength="15"
+                minlength="15"
               />
             </UFormGroup>
             <UFormGroup
@@ -250,7 +223,10 @@
               name="avatarUrl"
               class="self-start w-fit"
             >
-              <UPopover :popper="{ arrow: true }" v-model:open="open">
+              <UPopover
+                :popper="{ arrow: true, placement: 'auto-start' }"
+                v-model:open="open"
+              >
                 <UButton
                   color="white"
                   trailing-icon="i-heroicons-chevron-down-20-solid"
@@ -263,22 +239,30 @@
                         ? `https://ui-avatars.com/api/?name=${state.nome}&background=random`
                         : `https://ui-avatars.com/api/?name=SN&background=random`
                     "
-                    size="md"
+                    size="lg"
                   />
                 </UButton>
 
                 <template #panel>
-                  <div class="flex gap-2 p-4 items-center flex-wrap">
+                  <div
+                    class="flex gap-2 p-4 items-center justify-center flex-wrap w-96"
+                  >
                     <div v-for="(item, index) in items" :key="index">
                       <UAvatar
-                        :src="item.src"
-                        size="md"
+                        :src="item"
+                        size="lg"
                         @click="
-                          state.avatarUrl = item.src;
+                          state.avatarUrl = item;
                           open = false;
                         "
                       />
                     </div>
+                    <UButton
+                      icon="material-symbols:sync"
+                      @click="handleRefreshAvatars()"
+                      class="mx-auto w-fit"
+                      >Atualiza Avatares</UButton
+                    >
                   </div>
                 </template>
               </UPopover>

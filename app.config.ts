@@ -6,4 +6,7 @@ export default defineAppConfig({
       position: "bottom-right",
     },
   },
+  colorMode: {
+    preference: "light",
+  },
 });

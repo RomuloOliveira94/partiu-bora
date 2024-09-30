@@ -8,8 +8,12 @@ export default function useSubmitParticipate(
 ) {
   const toast = useToast();
   const schema = v.object({
-    nome: v.string("O seu nome é obrigatório."),
-    telefone: v.string("O seu WhatsApp é obrigatório."),
+    nome: v.pipe(v.string("O seu nome é obrigatório."), v.maxLength(22)),
+    telefone: v.pipe(
+      v.string("O seu telefone é obrigatório."),
+      v.minLength(15, "O telefone está incompleto."),
+      v.maxLength(15, "O telefone está incompleto.")
+    ),
     avatarUrl: v.optional(v.string()),
   });
 

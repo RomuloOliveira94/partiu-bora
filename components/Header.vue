@@ -49,9 +49,10 @@
                   : 'i-heroicons-sun-20-solid'
               "
               color="gray"
-              variant="ghost"
               aria-label="Theme"
+              class="fixed bottom-0 right-1 transform -translate-y-1/2"
               @click="isDark = !isDark"
+              size="lg"
             />
             <template #fallback>
               <div class="w-8 h-8" />
