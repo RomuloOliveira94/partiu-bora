@@ -192,7 +192,7 @@
           @submit="onSubmit"
         >
           <div class="flex items-center flex-col gap-4 w-full">
-            <UFormGroup label="Seu nome" name="registrante" class="w-full">
+            <UFormGroup label="Seu nome" name="nome" class="w-full">
               <UInput
                 v-model="state.nome"
                 type="text"
@@ -204,7 +204,7 @@
             </UFormGroup>
             <UFormGroup
               label="Seu WhatsApp"
-              name="registranteWhatsApp"
+              name="telefone"
               class="w-full"
             >
               <UInput

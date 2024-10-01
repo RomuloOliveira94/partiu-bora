@@ -42,6 +42,9 @@ export default function useSubmitParticipate(
         avatarUrl: body.data.avatarUrl,
         telefone: body.data.telefone,
       });
+      state.nome = undefined;
+      state.telefone = undefined;
+      state.avatarUrl = "";
       //isPart.value = "true";
       toast.add({
         title: "Presença confirmada!",
