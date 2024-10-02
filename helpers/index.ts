@@ -29,3 +29,8 @@ export function gerarCorHexClara(): string {
   }
   return cor;
 }
+
+
+const clearNumber = (value: string) => {
+  return value.replace(/\D/g, "");
+}
