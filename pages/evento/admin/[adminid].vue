@@ -145,9 +145,8 @@
     );
 
     if (confirm) {
-      const { status }: { status: number } = await $fetch(`/api/admin/${id}`, {
-        method: "DELETE",
-      });
+      const response = await $fetch<{ status: number }>(`/api/admin/${id}`);
+      const { status } = response;
 
       if (status === 200) {
         evento.value.evento.convidados = evento.value.evento.convidados.filter(
