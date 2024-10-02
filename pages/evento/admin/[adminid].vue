@@ -73,10 +73,10 @@
                       <strong>{{ convidado.nome.slice(0, 18) }}</strong>
                     </p>
                     <p
-                      class="mt-1.5 flex items-center gap-1"
+                      class="mt-1.5 flex items-center gap-1 hover:cursor-pointer hover:text-blue-500 hover:underline"
                       @click="handleWhatsApp(convidado.telefone)"
                     >
-                      <UIcon name="i-logos:whatsapp-icon" class="w-4 h-4" />
+                      <UIcon name="i-logos:whatsapp-icon" class="w-5 h-5" />
                       <strong>{{ convidado.telefone }}</strong>
                     </p>
                   </div>

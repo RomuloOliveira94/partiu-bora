@@ -31,6 +31,11 @@
   const handleRefreshAvatars = () => {
     items.value = gerarAvataresAleatorios(24);
   };
+
+  const handleWhatsApp = (telefone: string) => {
+    let clearedNumber = telefone.replace(/\D/g, "");
+    window.open(`https://wa.me/+55${clearedNumber}`);
+  };
 </script>
 
 <template>
@@ -117,13 +122,14 @@
                 <div class="flex items-center justify-between">
                   <div>
                     <p class="w-full">
-                      <span class="block">
-                        Nome:
-                      </span>
+                      <span class="block"> Nome: </span>
                       <strong>{{ convidado.nome.slice(0, 18) }}</strong>
                     </p>
-                    <p class="mt-1.5 flex items-center gap-1">
-                      <UIcon name="i-logos:whatsapp-icon" class="w-4 h-4" />
+                    <p
+                      class="mt-1.5 flex items-center gap-1 hover:cursor-pointer hover:text-blue-500 hover:underline"
+                      @click="handleWhatsApp(convidado.telefone)"
+                    >
+                      <UIcon name="i-logos:whatsapp-icon" class="w-5 h-5" />
                       <strong>{{ convidado.telefone }}</strong>
                     </p>
                   </div>
@@ -202,11 +208,7 @@
                 minlength="3"
               />
             </UFormGroup>
-            <UFormGroup
-              label="Seu WhatsApp"
-              name="telefone"
-              class="w-full"
-            >
+            <UFormGroup label="Seu WhatsApp" name="telefone" class="w-full">
               <UInput
                 v-model="state.telefone"
                 type="tel"
