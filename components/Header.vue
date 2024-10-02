@@ -81,7 +81,7 @@
             class="inline-block rounded px-3 py-3 text-sm font-medium text-white transition focus:outline-none focus:ring"
             type="button"
           >
-            Criar um evento
+            <NuxtLink to="/">Criar um evento</NuxtLink>
           </UButton>
           <ClientOnly>
             <UButton
