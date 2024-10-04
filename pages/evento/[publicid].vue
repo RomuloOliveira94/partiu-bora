@@ -6,6 +6,7 @@
   import { vMaska } from "maska/vue";
   import useSubmitParticipate from "~/composables/useSubmitParticipate";
 
+  const config = useRuntimeConfig();
   const route = useRoute();
   const publicid = ref(route.params.publicid);
   const { res } = useFetchPublicEvent(publicid);
@@ -16,7 +17,8 @@
   const isPart = useCookie(`evento-${publicid.value}`);
   const { state, schema, onSubmit } = useSubmitParticipate(
     showConfirmModal,
-    evento
+    evento,
+    isPart
   );
 
   useSeoMeta({
@@ -83,29 +85,30 @@
             class="rounded-md w-full md:w-44"
           />
         </div>
-
-        <UAlert
-          v-if="isPart"
-          icon="i-heroicons-check-circle-20-solid"
-          title="Presença confirmada!"
-          color="primary"
-          variant="solid"
-          class="text-lg w-full mt-2 md:w-auto p-2"
-          :ui="{ title: 'text-lg', icon: { base: 'h-8 w-8' } }"
-        />
-
-        <UButton
-          v-else
-          color="primary"
-          icon="i-heroicons-check-circle-20-solid"
-          size="lg"
-          class="text-lg w-full mt-2 md:w-auto"
-          @click="showConfirmModal = true"
-        >
-          Marcar Presença!
-        </UButton>
       </template>
       <div class="grid">
+        <div class="mb-4">
+          <UAlert
+            v-if="isPart && config.public.environment === 'production'"
+            icon="i-heroicons-check-circle-20-solid"
+            title="Presença confirmada!"
+            color="primary"
+            variant="solid"
+            class="text-lg w-full mt-2 md:w-72 p-2"
+            :ui="{ title: 'text-lg', icon: { base: 'h-8 w-8' } }"
+          />
+
+          <UButton
+            v-else
+            color="primary"
+            icon="i-heroicons-check-circle-20-solid"
+            size="lg"
+            class="text-lg w-full mt-2 md:w-auto"
+            @click="showConfirmModal = true"
+          >
+            Marcar Presença!
+          </UButton>
+        </div>
         <div>
           <h2 class="text-2xl">Convidados:</h2>
           <div
@@ -158,10 +161,15 @@
           </div>
         </div>
       </div>
-      <template #footer>
+      <template
+        v-if="
+          evento?.evento?.convidados && evento?.evento?.convidados.length > 5
+        "
+        #footer
+      >
         <div>
           <UAlert
-            v-if="isPart"
+            v-if="isPart && config.public.environment === 'production'"
             icon="i-heroicons-check-circle-20-solid"
             title="Presença confirmada!"
             color="primary"

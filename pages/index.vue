@@ -4,7 +4,9 @@
   import { vMaska } from "maska/vue";
   import * as v from "valibot";
   import type { Evento } from "~/server/db/schema";
-import { images } from "~/helpers/static";
+  import { images } from "~/helpers/static";
+
+  const config = useRuntimeConfig();
 
   const eventCreated = ref(false);
   const eventCreatedData = reactive<Evento>({
@@ -86,7 +88,7 @@ import { images } from "~/helpers/static";
     <meta name="description" content="Home page" />
   </Head>
   <div>
-    <UButton @click="devButton">Preencher formulário</UButton>
+    <UButton v-if="config.public.environment === 'development'" @click="devButton">Preencher formulário</UButton>
     <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
       <div class="flex items-center flex-col md:flex-row gap-4 w-full">
         <UFormGroup label="Seu nome" name="registrante" class="w-full">

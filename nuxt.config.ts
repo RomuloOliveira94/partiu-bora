@@ -6,6 +6,9 @@ export default defineNuxtConfig({
   runtimeConfig: {
     environment: "",
     tursoConnectionUrl: "",
-    tursoAuthToken:"" 
+    tursoAuthToken:"", 
+    public: {
+      environment: "",
+    }
   },
 });

@@ -4,7 +4,8 @@ import type { Response } from "./types";
 
 export default function useSubmitParticipate(
   showConfirmModal: Ref<boolean>,
-  evento: Ref<Response | null>
+  evento: Ref<Response | null>,
+  isPart: Ref<string | null | undefined>
 ) {
   const toast = useToast();
   const schema = v.object({
@@ -45,7 +46,7 @@ export default function useSubmitParticipate(
       state.nome = undefined;
       state.telefone = undefined;
       state.avatarUrl = "";
-      //isPart.value = "true";
+      isPart.value = "true";
       toast.add({
         title: "Presença confirmada!",
         description: "Obrigado por confirmar sua presença!",
