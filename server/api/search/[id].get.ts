@@ -18,7 +18,7 @@ export default defineEventHandler(async (event): Promise<Response> => {
   }
 
   try {
-    const evento = db
+    const evento = await db
       .select()
       .from(eventos)
       .where(sql`link_publico = ${codigo} or link_admin = ${codigo}`)

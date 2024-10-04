@@ -132,6 +132,19 @@ const eyes = [
   "variant24",
 ];
 
+export const images = [
+  "images/event-01.jpeg",
+  "images/event-02.jpeg",
+  "images/event-03.jpeg",
+  "images/event-04.jpeg",
+  "images/event-05.jpeg",
+  "images/event-06.jpeg",
+  "images/event-07.jpeg",
+  "images/event-08.jpeg",
+  "images/event-09.jpeg",
+  "images/event-10.jpeg",
+];
+
 export function gerarCorHexClara(): string {
   const letras = "89ABCDEF"; // Usar apenas letras e números que geram cores mais claras
   let cor = "";

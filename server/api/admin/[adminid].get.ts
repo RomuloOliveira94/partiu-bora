@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
 import db from "~/server/db";
-import { eventos, participantes } from "~/server/db/schema";
+import { eventos, Participante, participantes } from "~/server/db/schema";
 
 export default defineEventHandler(async (event) => {
   const adminid = getRouterParam(event, "adminid");

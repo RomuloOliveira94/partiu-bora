@@ -4,21 +4,7 @@
   import { vMaska } from "maska/vue";
   import * as v from "valibot";
   import type { Evento } from "~/server/db/schema";
-
-  const items = [
-    "https://picsum.photos/1920/1080?random=1",
-    "https://picsum.photos/1920/1080?random=2",
-    "https://picsum.photos/1920/1080?random=3",
-    "https://picsum.photos/1920/1080?random=4",
-    "https://picsum.photos/1920/1080?random=5",
-    "https://picsum.photos/1920/1080?random=6",
-    "https://picsum.photos/1920/1080?random=7",
-    "https://picsum.photos/1920/1080?random=8",
-    "https://picsum.photos/1920/1080?random=9",
-    "https://picsum.photos/1920/1080?random=10",
-    "https://picsum.photos/1920/1080?random=11",
-    "https://picsum.photos/1920/1080?random=12",
-  ];
+import { images } from "~/helpers/static";
 
   const eventCreated = ref(false);
   const eventCreatedData = reactive<Evento>({
@@ -89,7 +75,7 @@
     state.data = "2022-12-31T23:59";
     state.registrante = "Fulano";
     state.registranteWhatsApp = "(99) 99999-9999";
-    state.imageUrl = items[0];
+    state.imageUrl = images[0];
     state.quantidadeMaxima = "112";
   }
 </script>
@@ -158,7 +144,7 @@
         />
       </UFormGroup>
       <UFormGroup label="Imagem para o evento (opcional)" name="imageUrl">
-        <UCarousel v-slot="{ item }" :items="items" arrows>
+        <UCarousel v-slot="{ item }" :items="images" arrows>
           <img
             @click="handleSelect(item)"
             :src="item"
@@ -200,7 +186,7 @@
             class="flex items-center flex-col md:flex-row gap-4 bg-gray-800 p-4 rounded-md mb-6"
           >
             <img
-              :src="eventCreatedData.imageUrl || items[0]"
+              :src="eventCreatedData.imageUrl || images[0]"
               class="rounded-md w-full md:w-[200px] md:h-[250px] object-cover"
             />
             <div>

@@ -12,9 +12,12 @@
     "generate-migration": "drizzle-kit generate"
   },
   "dependencies": {
+    "@libsql/client": "^0.14.0",
+    "@nuxt/image": "^1.8.1",
     "@nuxt/ui": "^2.18.6",
     "@types/better-sqlite3": "^7.6.11",
     "better-sqlite3": "^11.3.0",
+    "dotenv": "^16.4.5",
     "drizzle-orm": "^0.33.0",
     "maska": "^3.0.2",
     "nanoid": "^5.0.7",

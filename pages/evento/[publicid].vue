@@ -77,8 +77,9 @@
               <strong>{{ formatDateTime(res?.evento?.data) }}</strong>
             </p>
           </div>
-          <img
+          <NuxtImg
             :src="evento?.evento?.imageUrl"
+            :alt="'Imagem do evento: ' + evento?.evento?.nome"
             class="rounded-md w-full md:w-44"
           />
         </div>
