@@ -1,3 +1,5 @@
+import { formatDateTime } from ".";
+
 const maleSeeds = [
   "George",
   "Chase",
@@ -196,3 +198,9 @@ export function gerarAvataresAleatorios(quantidade: number): string[] {
 
   return avatares;
 }
+
+export const eventInviteText = (nome: string, data: number, link: string) => {
+  return `Olá! Confirme a presença para o evento ${nome} que acontecerá no dia ${formatDateTime(
+    data
+  )}, segue link: ${link}`;
+};

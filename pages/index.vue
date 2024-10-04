@@ -1,12 +1,14 @@
 <script setup lang="ts">
   import type { FormSubmitEvent } from "#ui/types";
-  import { formatDateTime } from "~/helpers";
+  import { adminEventLink, eventLink, formatDateTime } from "~/helpers";
   import { vMaska } from "maska/vue";
   import * as v from "valibot";
   import type { Evento } from "~/server/db/schema";
   import { images } from "~/helpers/static";
+  import { eventInviteText } from "~/helpers/static";
 
   const config = useRuntimeConfig();
+  const appUrl = config.public.url;
 
   const eventCreated = ref(false);
   const eventCreatedData = reactive<Evento>({
@@ -80,6 +82,15 @@
     state.imageUrl = images[0];
     state.quantidadeMaxima = "112";
   }
+
+  function handleCopy(text: string) {
+    navigator.clipboard.writeText(text);
+    alert("Copiado para a área de transferência!");
+  }
+
+  function handleGoTo(url: string) {
+    window.open(url, "_blank")?.focus();
+  }
 </script>
 
 <template>
@@ -88,7 +99,11 @@
     <meta name="description" content="Home page" />
   </Head>
   <div>
-    <UButton v-if="config.public.environment === 'development'" @click="devButton">Preencher formulário</UButton>
+    <UButton
+      v-if="config.public.environment === 'development'"
+      @click="devButton"
+      >Preencher formulário</UButton
+    >
     <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
       <div class="flex items-center flex-col md:flex-row gap-4 w-full">
         <UFormGroup label="Seu nome" name="registrante" class="w-full">
@@ -151,7 +166,7 @@
             @click="handleSelect(item)"
             :src="item"
             :class="item === state.imageUrl ? 'border-2 border-green-500' : ''"
-            class="cursor-pointer hover:border-green-500 hover:border-2 rounded-md mx-1 md:w-[450px] w-[250px] h-full"
+            class="cursor-pointer hover:border-green-500 hover:border-2 rounded-md mx-1 md:w-[250px] w-[250px] h-full object-cover"
             draggable="false"
           />
         </UCarousel>
@@ -185,11 +200,12 @@
         </template>
         <div>
           <div
-            class="flex items-center flex-col md:flex-row gap-4 bg-gray-800 p-4 rounded-md mb-6"
+            class="grid gap-4 p-4 rounded-md mb-6"
           >
-            <img
+            <NuxtImg
               :src="eventCreatedData.imageUrl || images[0]"
-              class="rounded-md w-full md:w-[200px] md:h-[250px] object-cover"
+              :alt="eventCreatedData.nome"
+              class="rounded-md w-full object-cover h-64"
             />
             <div>
               <p class="mt-1.5">
@@ -201,7 +217,8 @@
                 <strong>{{ formatDateTime(eventCreatedData.data) }}</strong>
               </p>
               <p class="mt-1.5">
-                Registrante: <strong>{{ eventCreatedData.registranteNome }}</strong>
+                Registrante:
+                <strong>{{ eventCreatedData.registranteNome }}</strong>
               </p>
               <p class="mt-1.5">
                 WhatsApp:
@@ -215,38 +232,159 @@
           </div>
 
           <div class="grid gap-2">
-            <h2 class="font-bold text-xl mb-4">Links para compartilhamento:</h2>
-            <div class="grid gap-2">
-              <p>Código do evento para convidados: <strong>123456</strong></p>
-              Link para o evento (copiar):
-              <p class="truncate">
-                <strong>https://partiubora.vercel.app/evento/123456</strong>
-              </p>
-              <p>Código do evento para Administrar: <strong>123456</strong></p>
-              Link para o evento:
-              <p class="truncate">
-                <strong>https://partiubora.vercel.app/admin/123456</strong>
-              </p>
-              <!-- <UButton
-              class="inline-block rounded px-3 py-3 text-sm font-medium text-white transition bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring"
-            >
-              WhatsApp
-            </UButton>
-            <UButton
-              class="inline-block rounded px-3 py-3 text-sm font-medium text-white transition bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring"
-            >
-              Telegram
-            </UButton>
-            <UButton
-              class="inline-block rounded px-3 py-3 text-sm font-medium text-white transition bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring"
-            >
-              Facebook
-            </UButton>
-            <UButton
-              class="inline-block rounded px-3 py-3 text-sm font-medium text-white transition bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring"
-            >
-              Twitter
-            </UButton> -->
+            <h2 class="font-bold text-xl mb-2">Links para compartilhamento:</h2>
+            <div class="grid gap-4">
+              <UCard>
+                <h3>Código do evento para convidados:</h3>
+                <UButton
+                  size="sm"
+                  color="primary"
+                  variant="outline"
+                  class="my-2 flex items-center justify-between"
+                  @click="handleCopy(eventCreatedData.linkPublico)"
+                >
+                  <strong>{{ eventCreatedData.linkPublico }}</strong>
+                  <UIcon
+                    name="i-heroicons-clipboard-20-solid"
+                    class="w-4 h-4 ml-1"
+                  />
+                </UButton>
+                <h3>Link para o evento (copiar):</h3>
+                <UButton
+                  size="sm"
+                  color="primary"
+                  variant="outline"
+                  class="w-64 min-[475px]:w-full mt-2 flex items-center justify-between"
+                  @click="
+                    handleCopy(eventLink(appUrl, eventCreatedData.linkPublico))
+                  "
+                >
+                  <p class="truncate">
+                    <strong>
+                      {{ eventLink(appUrl, eventCreatedData.linkPublico) }}
+                    </strong>
+                  </p>
+                  <UIcon
+                    name="i-heroicons-clipboard-20-solid"
+                    class="w-4 h-4 ml-1"
+                  />
+                </UButton>
+              </UCard>
+              <UCard>
+                <h3>Código do evento para Administrar:</h3>
+                <UButton
+                  size="sm"
+                  color="primary"
+                  variant="outline"
+                  class="my-2 flex items-center justify-between"
+                  @click="handleCopy(eventCreatedData.linkPublico)"
+                >
+                  <strong>{{ eventCreatedData.linkPublico }}</strong>
+                  <UIcon
+                    name="i-heroicons-clipboard-20-solid"
+                    class="w-4 h-4 ml-1"
+                  />
+                </UButton>
+                <h2>Link para o evento (copiar):</h2>
+                <UButton
+                  size="sm"
+                  color="primary"
+                  variant="outline"
+                  class="w-64 min-[475px]:w-full mt-2 flex items-center justify-between"
+                  @click="
+                    handleCopy(
+                      adminEventLink(appUrl, eventCreatedData.linkAdmin)
+                    )
+                  "
+                >
+                  <p class="truncate">
+                    <strong>
+                      {{ adminEventLink(appUrl, eventCreatedData.linkAdmin) }}
+                    </strong>
+                  </p>
+                  <UIcon
+                    name="i-heroicons-clipboard-20-solid"
+                    class="w-4 h-4 ml-1"
+                  />
+                </UButton>
+              </UCard>
+              <UCard>
+                <template #header>
+                  <h3 class="text-xl font-semibold">
+                    Compartilhar nas redes sociais:
+                  </h3>
+                </template>
+                <div class="flex items-center flex-wrap gap-4">
+                  <UButton
+                    variant="outline"
+                    color="primary"
+                    icon="logos:whatsapp-icon"
+                    @click="
+                      handleGoTo(
+                        'https://api.whatsapp.com/send?text=' +
+                          eventInviteText(
+                            eventCreatedData.nome,
+                            eventCreatedData.data,
+                            eventLink(appUrl, eventCreatedData.linkPublico)
+                          )
+                      )
+                    "
+                  >
+                    WhatsApp
+                  </UButton>
+                  <UButton
+                    variant="outline"
+                    color="primary"
+                    icon="logos:telegram"
+                    @click="
+                      handleGoTo(
+                        'https://t.me/share/url?url=' +
+                          eventInviteText(
+                            eventCreatedData.nome,
+                            eventCreatedData.data,
+                            eventLink(appUrl, eventCreatedData.linkPublico)
+                          )
+                      )
+                    "
+                  >
+                    Telegram
+                  </UButton>
+                  <UButton
+                    variant="outline"
+                    color="primary"
+                    icon="logos:facebook"
+                    @click="
+                      handleGoTo(
+                        'https://www.facebook.com/sharer/sharer.php?u=' +
+                          eventInviteText(
+                            eventCreatedData.nome,
+                            eventCreatedData.data,
+                            eventLink(appUrl, eventCreatedData.linkPublico)
+                          )
+                      )
+                    "
+                  >
+                    Facebook
+                  </UButton>
+                  <UButton
+                    variant="outline"
+                    color="primary"
+                    icon="logos:bluesky"
+                    @click="
+                      handleGoTo(
+                        'https://bsky.app/intent/compose?text=' +
+                          eventInviteText(
+                            eventCreatedData.nome,
+                            eventCreatedData.data,
+                            eventLink(appUrl, eventCreatedData.linkPublico)
+                          )
+                      )
+                    "
+                  >
+                    Bluesky
+                  </UButton>              
+                </div>
+              </UCard>
             </div>
           </div>
         </div>

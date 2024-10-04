@@ -9,6 +9,8 @@ export default defineNuxtConfig({
     tursoAuthToken:"", 
     public: {
       environment: "",
+      url: "",
+      apiUrl: "",
     }
   },
 });

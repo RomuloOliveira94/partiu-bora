@@ -30,7 +30,14 @@ export function gerarCorHexClara(): string {
   return cor;
 }
 
-
 const clearNumber = (value: string) => {
   return value.replace(/\D/g, "");
-}
+};
+
+export const adminEventLink = (url: string, id: string) => {
+  return `${url}/evento/admin/${id}`;
+};
+
+export const eventLink = (url: string, id: string) => {
+  return `${url}/evento/${id}`;
+};
