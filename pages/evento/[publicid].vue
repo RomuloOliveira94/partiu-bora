@@ -167,7 +167,7 @@
         "
         #footer
       >
-        <div>
+        <div class="md:hidden">
           <UAlert
             v-if="isPart && config.public.environment === 'production'"
             icon="i-heroicons-check-circle-20-solid"
