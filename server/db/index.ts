@@ -11,7 +11,7 @@ import { createClient } from "@libsql/client";
 
 const config = useRuntimeConfig();
 let sqlite;
-let db: SqliteRemoteDatabase; 
+let db: any; 
 
 if (config.environment === "production") {
   sqlite = createClient({

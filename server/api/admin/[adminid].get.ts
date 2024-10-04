@@ -26,7 +26,9 @@ export default defineEventHandler(async (event) => {
 
     const evento = {
       ...resultado[0].evento,
-      convidados: resultado.map((row) => row.participantes).filter(Boolean),
+      convidados: resultado
+        .map((row: { participantes: Participante }) => row.participantes)
+        .filter(Boolean),
     };
 
     return {
