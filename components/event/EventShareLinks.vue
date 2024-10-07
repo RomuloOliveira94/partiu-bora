@@ -8,8 +8,13 @@
     <div>
       <div class="grid gap-2">
         <h2 class="font-bold text-xl mb-2">Links para compartilhamento:</h2>
-        <div class="grid gap-4">
+        <div class="grid gap-4 xl:flex xl:gap-4">
           <UCard>
+            <template #header>
+              <h3 class="font-semibold text-xl">
+                Links para convidados:
+              </h3>
+            </template>
             <h3>Código do evento para convidados:</h3>
             <UButton
               size="sm"
@@ -47,6 +52,11 @@
             </div>
           </UCard>
           <UCard>
+            <template #header>
+              <h3 class="font-semibold text-xl">
+                Links para administradores:
+              </h3>
+            </template>
             <h3>Código do evento para Administrar:</h3>
             <UButton
               size="sm"
