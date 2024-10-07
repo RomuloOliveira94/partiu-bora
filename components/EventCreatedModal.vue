@@ -28,7 +28,7 @@
       <div>
         <div class="grid gap-4 p-4 rounded-md mb-6">
           <NuxtImg
-            :src="eventCreatedData.imageUrl || images[0]"
+            :src="eventCreatedData?.imageUrl || ''"
             :alt="eventCreatedData.nome"
             class="rounded-md w-full object-cover h-64"
           />

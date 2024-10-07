@@ -3,9 +3,8 @@ import db from "~/server/db";
 import { participantes } from "~/server/db/schema";
 
 export default defineEventHandler(async (event) => {
-  console.log("Deletar convidado", event.path);
+  console.log("Deletar convidado");
   const id = getRouterParam(event, "adminid");
-  console.log("Convidado ID: ", id);
 
   if (!id) {
     return { status: 404, body: { error: "Evento não encontrado" } };

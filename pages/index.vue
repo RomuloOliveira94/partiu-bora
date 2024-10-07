@@ -160,8 +160,17 @@
           />
         </UCarousel>
       </UFormGroup>
-
-      <UButton type="submit"> Criar Evento! </UButton>
+      <div class="flex justify-center md:justify-start">
+        <UButton
+          type="submit"
+          icon="i-heroicons-check-circle"          
+          size="xl"
+          class="text-xl font-semibold"
+          trailing
+        >
+          Criar Evento!
+        </UButton>
+      </div>
     </UForm>
 
     <EventCreatedModal

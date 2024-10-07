@@ -1,17 +1,8 @@
 <script setup lang="ts">
   import type { FormSubmitEvent } from "#ui/types";
   import * as v from "valibot";
-  const colorMode = useColorMode();
   const toast = useToast();
   const router = useRouter();
-  const isDark = computed({
-    get() {
-      return colorMode.value === "dark";
-    },
-    set() {
-      colorMode.preference = colorMode.value === "dark" ? "light" : "dark";
-    },
-  });
 
   const showEventSearch = ref(false);
 
@@ -71,7 +62,7 @@
           </p>
         </div>
 
-        <div class="flex items-center gap-4">
+        <div class="flex items-center flex-wrap gap-4">
           <UButton
             size="lg"
             color="white"
@@ -85,26 +76,10 @@
           <UButton
             class="inline-block rounded px-3 py-3 text-sm font-medium text-white transition focus:outline-none focus:ring"
             type="button"
+            v-if="router.currentRoute.value.path !== '/'"
           >
             <NuxtLink to="/">Criar um evento</NuxtLink>
           </UButton>
-          <ClientOnly>
-            <UButton
-              :icon="
-                isDark
-                  ? 'i-heroicons-moon-20-solid'
-                  : 'i-heroicons-sun-20-solid'
-              "
-              color="gray"
-              aria-label="Theme"
-              class="fixed bottom-0 right-1 transform -translate-y-1/2"
-              @click="isDark = !isDark"
-              size="lg"
-            />
-            <template #fallback>
-              <div class="w-8 h-8" />
-            </template>
-          </ClientOnly>
         </div>
       </div>
     </div>

@@ -12,7 +12,7 @@
 </script>
 
 <template>
-  <div>
+  <div class="relative">
     <NuxtLoadingIndicator />
     <Header />
     <NuxtLayout>
@@ -21,13 +21,12 @@
       </div>
       <UNotifications />
     </NuxtLayout>
+    <ThemeButton />
   </div>
 </template>
 
 <style>
-
-div {
-  font-family: Lato, sans-serif;
-}
-
+  div {
+    font-family: Poppins, sans-serif;
+  }
 </style>
