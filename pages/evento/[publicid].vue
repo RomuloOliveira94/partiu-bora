@@ -119,7 +119,7 @@
             class="grid lg:grid-cols-3 xl:grid-cols-4 gap-2 mt-4"
           >
             <div
-              v-for="convidado in evento?.evento?.convidados"
+              v-for="convidado in evento.evento.convidados"
               :key="convidado.id"
             >
               <UCard>

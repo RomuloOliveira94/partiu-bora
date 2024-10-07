@@ -58,11 +58,16 @@
         class="flex flex-col items-start gap-4 md:flex-row md:items-center md:justify-between"
       >
         <div>
-          <h1 class="text-2xl font-bold sm:text-3xl">Partiu Bora?</h1>
+          <h1
+            class="text-2xl font-bold sm:text-3xl hover:text-primary cursor-pointer"
+            @click="router.push('/')"
+          >
+            Partiu Bora?
+          </h1>
 
           <p class="mt-1.5 text-sm">
-            Organize um evento ou compromisso de forma simples e rápida, e convide seus
-            amigos para participar.
+            Organize um evento ou compromisso de forma simples e rápida, e
+            convide seus amigos para participar.
           </p>
         </div>
 
