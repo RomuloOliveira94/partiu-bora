@@ -1,7 +1,6 @@
 <script setup lang="ts">
   import useFetchPublicEvent from "~/composables/UseFetchPublicEvent";
   import { gerarAvataresAleatorios } from "~/helpers/static";
-  import { formatDateTime } from "~/helpers";
   import type { FormSubmitEvent } from "#ui/types";
   import { vMaska } from "maska/vue";
   import useSubmitParticipate from "~/composables/useSubmitParticipate";
@@ -41,7 +40,7 @@
 </script>
 
 <template>
-  <div v-if="res?.status === 404 || res?.status === 500">
+  <div v-if="res?.status === 404 || res?.status === 500 || !evento?.evento">
     <UAlert
       icon="i-noto:face-with-diagonal-mouth"
       title="Evento não encontrado"
@@ -55,111 +54,15 @@
   <div v-else>
     <UCard>
       <template #header>
-        <div
-          class="md:flex md:justify-between md:flex-row md:items-center grid gap-2"
-        >
-          <div class="grid gap-2">
-            <h2
-              class="text-2xl font-semibold leading-6 text-gray-900 dark:text-white"
-            >
-              {{ evento?.evento?.nome }}
-            </h2>
-            <div class="flex items-center flex-wrap gap-2">
-              <small
-                >Criado por:
-                <strong>{{ evento?.evento?.registranteNome }}</strong></small
-              >
-              <small class="flex items-center gap-1"
-                ><UIcon name="i-logos:whatsapp-icon" class="w-4 h-4" />
-                {{ evento?.evento?.registranteWhatsApp }}</small
-              >
-            </div>
-            <p>
-              Data:
-              <strong>{{ formatDateTime(res?.evento?.data) }}</strong>
-            </p>
-          </div>
-          <NuxtImg
-            :src="evento?.evento?.imageUrl"
-            :alt="'Imagem do evento: ' + evento?.evento?.nome"
-            class="rounded-md w-full md:w-44"
-          />
-        </div>
+        <EventHeader :evento="evento?.evento" />
       </template>
       <div class="grid">
-        <div class="mb-4">
-          <UAlert
-            v-if="isPart && config.public.environment === 'production'"
-            icon="i-heroicons-check-circle-20-solid"
-            title="Presença confirmada!"
-            color="primary"
-            variant="solid"
-            class="text-lg w-full mt-2 md:w-72 p-2"
-            :ui="{ title: 'text-lg', icon: { base: 'h-8 w-8' } }"
-          />
-
-          <UButton
-            v-else
-            color="primary"
-            icon="i-heroicons-check-circle-20-solid"
-            size="lg"
-            class="text-lg w-full mt-2 md:w-auto"
-            @click="showConfirmModal = true"
-          >
-            Marcar Presença!
-          </UButton>
-        </div>
-        <div>
-          <h2 class="text-2xl">Convidados:</h2>
-          <div
-            v-if="
-              evento?.evento?.convidados &&
-              evento?.evento?.convidados.length > 0
-            "
-            class="grid lg:grid-cols-3 xl:grid-cols-4 gap-2 mt-4"
-          >
-            <div
-              v-for="convidado in evento.evento.convidados"
-              :key="convidado.id"
-            >
-              <UCard>
-                <div class="flex items-center justify-between">
-                  <div>
-                    <p class="w-full">
-                      <span class="block"> Nome: </span>
-                      <strong>{{ convidado.nome.slice(0, 18) }}</strong>
-                    </p>
-                    <p
-                      class="mt-1.5 flex items-center gap-1 hover:cursor-pointer hover:text-blue-500 hover:underline"
-                      @click="handleWhatsApp(convidado.telefone)"
-                    >
-                      <UIcon name="i-logos:whatsapp-icon" class="w-5 h-5" />
-                      <strong>{{ convidado.telefone }}</strong>
-                    </p>
-                  </div>
-                  <UAvatar
-                    :src="
-                      convidado.avatarUrl
-                        ? convidado.avatarUrl
-                        : `https://ui-avatars.com/api/?name=${convidado.nome}&background=random`
-                    "
-                    size="xl"
-                  />
-                </div>
-              </UCard>
-            </div>
-          </div>
-          <div
-            v-if="
-              evento?.evento?.convidados &&
-              evento?.evento?.convidados.length <= 0
-            "
-          >
-            <h2 class="text-lg font-bold mt-4">
-              Nenhum convidado confirmado ainda, seja o primeiro a confirmar!
-            </h2>
-          </div>
-        </div>
+        <EventGuestConfirmButton
+          :isPart="isPart"
+          :config="config"
+          @confirmPresence="showConfirmModal = true"
+        />
+        <EventGuestsComponent :convidados="evento?.evento?.convidados" />
       </div>
       <template
         v-if="
@@ -167,27 +70,12 @@
         "
         #footer
       >
-        <div class="md:hidden">
-          <UAlert
-            v-if="isPart && config.public.environment === 'production'"
-            icon="i-heroicons-check-circle-20-solid"
-            title="Presença confirmada!"
-            color="primary"
-            variant="solid"
-            class="text-lg w-full mt-2 md:w-auto p-2"
-            :ui="{ title: 'text-lg', icon: { base: 'h-8 w-8' } }"
-          />
-          <UButton
-            v-else
-            color="primary"
-            icon="i-heroicons-check-circle-20-solid"
-            size="lg"
-            class="text-lg w-full md:w-auto"
-            @click="showConfirmModal = true"
-          >
-            Marcar Presença!
-          </UButton>
-        </div>
+        <EventGuestConfirmButton
+          :isPart="isPart"
+          :config="config"
+          class="md:hidden"
+          @confirmPresence="showConfirmModal = true"
+        />
       </template>
     </UCard>
     <UModal v-model="showConfirmModal">

@@ -163,7 +163,7 @@
       <div class="flex justify-center md:justify-start">
         <UButton
           type="submit"
-          icon="i-heroicons-check-circle"          
+          icon="i-heroicons-check-circle"
           size="xl"
           class="text-xl font-semibold"
           trailing
@@ -174,6 +174,7 @@
     </UForm>
 
     <EventCreatedModal
+      v-if="eventCreated"
       @update:eventCreated="eventCreated = $event"
       :eventCreated="eventCreated"
       :eventCreatedData="eventCreatedData"
