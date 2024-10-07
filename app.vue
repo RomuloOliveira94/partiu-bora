@@ -23,3 +23,11 @@
     </NuxtLayout>
   </div>
 </template>
+
+<style>
+
+div {
+  font-family: Lato, sans-serif;
+}
+
+</style>

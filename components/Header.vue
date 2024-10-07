@@ -61,7 +61,7 @@
           <h1 class="text-2xl font-bold sm:text-3xl">Partiu Bora?</h1>
 
           <p class="mt-1.5 text-sm">
-            Organize seus eventos de forma simples e rápida, e convide seus
+            Organize um evento ou compromisso de forma simples e rápida, e convide seus
             amigos para participar.
           </p>
         </div>

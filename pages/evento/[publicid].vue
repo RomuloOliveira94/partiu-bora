@@ -58,7 +58,7 @@
         <div
           class="md:flex md:justify-between md:flex-row md:items-center grid gap-2"
         >
-          <div>
+          <div class="grid gap-2">
             <h2
               class="text-2xl font-semibold leading-6 text-gray-900 dark:text-white"
             >
@@ -74,7 +74,7 @@
                 {{ evento?.evento?.registranteWhatsApp }}</small
               >
             </div>
-            <p class="mt-1.5">
+            <p>
               Data:
               <strong>{{ formatDateTime(res?.evento?.data) }}</strong>
             </p>

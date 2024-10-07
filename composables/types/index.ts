@@ -11,6 +11,8 @@ export interface Response {
       estado: string;
       pais: string;
       imageUrl: string;
+      linkPublico: string;
+      linkAdmin: string;
       registranteNome: string;
       registranteWhatsApp: string;
       convidados: {

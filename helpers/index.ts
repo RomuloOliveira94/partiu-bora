@@ -41,3 +41,12 @@ export const adminEventLink = (url: string, id: string) => {
 export const eventLink = (url: string, id: string) => {
   return `${url}/evento/${id}`;
 };
+
+export function handleGoTo(url: string) {
+  window.open(url, "_blank")?.focus();
+}
+
+export function handleCopy(text: string) {
+  navigator.clipboard.writeText(text);
+  alert("Copiado para a área de transferência!");
+}

@@ -23,7 +23,7 @@
         <div
           class="md:flex md:justify-between md:flex-row md:items-center grid gap-2"
         >
-          <div>
+          <div class="grid gap-2">
             <h2
               class="text-2xl font-semibold leading-6 text-gray-900 dark:text-white"
             >
@@ -39,7 +39,7 @@
                 {{ evento?.evento?.registranteWhatsApp }}</small
               >
             </div>
-            <p class="mt-1.5">
+            <p>
               Data:
               <strong>{{ formatDateTime(evento?.evento?.data) }}</strong>
             </p>
@@ -115,11 +115,121 @@
             "
           >
             <h2 class="text-lg font-bold mt-4">
-              Nenhum convidado confirmado ainda, seja o primeiro a confirmar!
+              Nenhum convidado confirmado ainda, convide alguém!
             </h2>
           </div>
         </div>
       </div>
+      <template #footer>
+        <UCard
+          :ui="{
+            ring: '',
+            divide: 'divide-y divide-gray-100 dark:divide-gray-800',
+          }"
+          v-if="
+            evento?.evento?.convidados && evento?.evento?.convidados.length <= 0
+          "
+        >
+          <div>
+            <div class="grid gap-2">
+              <h2 class="font-bold text-xl mb-2">
+                Links para compartilhamento:
+              </h2>
+              <div class="grid gap-4">
+                <UCard>
+                  <h3>Código do evento para convidados:</h3>
+                  <UButton
+                    size="sm"
+                    color="primary"
+                    variant="outline"
+                    class="my-2 flex items-center justify-between"
+                    @click="handleCopy(evento?.evento?.linkPublico)"
+                  >
+                    <strong>{{ evento?.evento?.linkPublico }}</strong>
+                    <UIcon
+                      name="i-heroicons-clipboard-20-solid"
+                      class="w-4 h-4 ml-1"
+                    />
+                  </UButton>
+                  <h3>Link para o evento (copiar):</h3>
+                  <div class="flex items-center gap-2">
+                    <UButton
+                      size="sm"
+                      color="primary"
+                      variant="outline"
+                      class="w-52 min-[475px]:w-fit flex items-center justify-between"
+                      @click="
+                        handleCopy(
+                          eventLink(appUrl, evento?.evento?.linkPublico)
+                        )
+                      "
+                    >
+                      <p class="truncate">
+                        <strong>
+                          {{ eventLink(appUrl, evento?.evento?.linkPublico) }}
+                        </strong>
+                      </p>
+                      <UIcon
+                        name="i-heroicons-clipboard-20-solid"
+                        class="w-4 h-4 ml-1"
+                      />
+                    </UButton>
+                    <LinkButton
+                      :link="eventLink(appUrl, evento?.evento?.linkPublico)"
+                    />
+                  </div>
+                </UCard>
+                <UCard>
+                  <h3>Código do evento para Administrar:</h3>
+                  <UButton
+                    size="sm"
+                    color="primary"
+                    variant="outline"
+                    class="my-2 flex items-center justify-between"
+                    @click="handleCopy(evento?.evento?.linkPublico)"
+                  >
+                    <strong>{{ evento?.evento?.linkPublico }}</strong>
+                    <UIcon
+                      name="i-heroicons-clipboard-20-solid"
+                      class="w-4 h-4 ml-1"
+                    />
+                  </UButton>
+                  <h2>Link para o evento (copiar):</h2>
+                  <div class="flex items-center gap-2">
+                    <UButton
+                      size="sm"
+                      color="primary"
+                      variant="outline"
+                      class="w-52 min-[475px]:w-fit flex items-center justify-between"
+                      @click="
+                        handleCopy(
+                          adminEventLink(appUrl, evento?.evento?.linkAdmin)
+                        )
+                      "
+                    >
+                      <p class="truncate">
+                        <strong>
+                          {{
+                            adminEventLink(appUrl, evento?.evento?.linkAdmin)
+                          }}
+                        </strong>
+                      </p>
+                      <UIcon
+                        name="i-heroicons-clipboard-20-solid"
+                        class="w-4 h-4 ml-1"
+                      />
+                    </UButton>
+                    <LinkButton
+                      :link="adminEventLink(appUrl, evento?.evento?.linkAdmin)"
+                    />
+                  </div>
+                </UCard>
+                <SocialEventShareCard :evento="evento" :appUrl="appUrl" />
+              </div>
+            </div>
+          </div>
+        </UCard>
+      </template>
     </UCard>
   </div>
 </template>
@@ -127,10 +237,12 @@
 <script setup lang="ts">
   import { ref } from "vue";
   import useFetchAdminEvent from "~/composables/UseFetchAdminEvent";
-  import { formatDateTime } from "~/helpers";
+  import { adminEventLink, eventLink, formatDateTime } from "~/helpers";
 
   const route = useRoute();
   const toast = useToast();
+  const config = useRuntimeConfig();
+  const appUrl = config.public.url;
 
   const adminid = ref(route.params.adminid);
   const { res } = useFetchAdminEvent(adminid);
@@ -177,4 +289,9 @@
     let clearedNumber = telefone.replace(/\D/g, "");
     window.open(`https://wa.me/+55${clearedNumber}`);
   };
+
+  function handleCopy(text: string) {
+    navigator.clipboard.writeText(text);
+    alert("Copiado para a área de transferência!");
+  }
 </script>
