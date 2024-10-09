@@ -14,13 +14,13 @@
           <UCard>
             <div class="flex items-center justify-between">
               <div>
-                <p class="w-full" @click="desconvidar(convidado.id)">
+                <p class="w-full" @click="emit('desconvidar', convidado.id)">
                   <span class="block"> Nome: </span>
                   <strong>{{ convidado.nome.slice(0, 18) }}</strong>
                 </p>
                 <p
                   class="mt-1.5 flex items-center gap-1 hover:cursor-pointer hover:text-blue-500 hover:underline"
-                  @click="handleWhatsApp(convidado.telefone)"
+                  @click="emit('handleWhatsApp', convidado.telefone)"
                 >
                   <UIcon name="i-logos:whatsapp-icon" class="w-5 h-5" />
                   <strong>{{ convidado.telefone }}</strong>
@@ -37,11 +37,11 @@
                     icon="i-heroicons-x-circle-20-solid"
                     size="xs"
                     class="text-sm rounded-full"
-                    @click="desconvidar(convidado.id)"
+                    @click="emit('desconvidar', convidado.id)"
                   />
                 </UTooltip>
                 <UAvatar
-                  @click="desconvidar(convidado.id)"
+                  @click="emit('desconvidar', convidado.id)"
                   :src="
                     convidado.avatarUrl
                       ? convidado.avatarUrl
@@ -77,8 +77,6 @@
     isAdmin?: Boolean;
   }>();
   const emit = defineEmits(["desconvidar", "handleWhatsApp"]);
-  const desconvidar = (id: number) => emit("desconvidar", id);
-  const handleWhatsApp = (telefone: string) => emit("handleWhatsApp", telefone);
 </script>
 
 <style scoped></style>

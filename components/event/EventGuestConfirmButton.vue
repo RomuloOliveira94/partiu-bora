@@ -25,7 +25,7 @@
 
 <script setup lang="ts">
   defineProps<{
-    isPart?: string | null;
+    isPart?: string | null | undefined;
     config: any;
     class?: string;
   }>();

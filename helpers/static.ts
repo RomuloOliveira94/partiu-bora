@@ -172,7 +172,7 @@ export const images = [
   "images/event-35.jpeg",
   "images/event-36.jpeg",
   "images/event-37.jpeg",
-  "images/event-38.jpeg"
+  "images/event-38.jpeg",
 ];
 
 export function gerarCorHexClara(): string {
@@ -228,7 +228,7 @@ export function gerarAvataresAleatorios(quantidade: number): string[] {
 }
 
 export const eventInviteText = (nome: string, data: number, link: string) => {
-  return `Olá! Confirme a presença para o evento ${nome} que acontecerá no dia ${formatDateTime(
+  return `Partiu, bora? ${nome}, ${formatDateTime(
     data
-  )}, segue link: ${link}`;
+  )}, confirma no link: ${link}`;
 };

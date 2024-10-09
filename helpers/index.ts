@@ -50,3 +50,21 @@ export function handleCopy(text: string) {
   navigator.clipboard.writeText(text);
   alert("Copiado para a área de transferência!");
 }
+
+export function handleWhatsApp(phone: string, message?: string) {
+  let clearedNumber = phone.replace(/\D/g, "");
+
+  if (!clearedNumber.startsWith("55")) {
+    clearedNumber = `55${clearedNumber}`;
+  }
+  
+  let url: string;
+
+  if (!message) {
+    url = `https://wa.me/${clearedNumber}`;
+  } else {
+    url = `https://wa.me/${clearedNumber}?text=${encodeURIComponent(message)}`;
+  }
+
+  handleGoTo(url);
+}

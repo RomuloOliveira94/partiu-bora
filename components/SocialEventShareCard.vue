@@ -12,9 +12,9 @@
           handleGoTo(
             'https://api.whatsapp.com/send?text=' +
               eventInviteText(
-                evento?.evento?.nome,
-                evento?.evento?.data,
-                eventLink(appUrl, evento?.evento?.linkPublico)
+                evento?.nome,
+                evento?.data,
+                eventLink(appUrl, evento?.linkPublico)
               )
           )
         "
@@ -29,9 +29,9 @@
           handleGoTo(
             'https://t.me/share/url?url=' +
               eventInviteText(
-                evento?.evento?.nome,
-                evento?.evento?.data,
-                eventLink(appUrl, evento?.evento?.linkPublico)
+                evento?.nome,
+                evento?.data,
+                eventLink(appUrl, evento?.linkPublico)
               )
           )
         "
@@ -46,9 +46,9 @@
           handleGoTo(
             'https://www.facebook.com/sharer/sharer.php?u=' +
               eventInviteText(
-                evento?.evento?.nome,
-                evento?.evento?.data,
-                eventLink(appUrl, evento?.evento?.linkPublico)
+                evento?.nome,
+                evento?.data,
+                eventLink(appUrl, evento?.linkPublico)
               )
           )
         "
@@ -63,9 +63,9 @@
           handleGoTo(
             'https://bsky.app/intent/compose?text=' +
               eventInviteText(
-                evento?.evento?.nome,
-                evento?.evento?.data,
-                eventLink(appUrl, evento?.evento?.linkPublico)
+                evento?.nome,
+                evento?.data,
+                eventLink(appUrl, evento?.linkPublico)
               )
           )
         "
