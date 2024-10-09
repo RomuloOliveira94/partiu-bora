@@ -57,7 +57,7 @@
             Partiu Bora?
           </h1>
           <div class="mt-6">
-            <p class="mt-1.5 md:text-lg text-sm">
+            <p class="mt-1.5 md:text-lg">
               Organize um evento ou compromisso de forma simples e rápida, e
               convide seus amigos para participar.
             </p>

@@ -88,4 +88,28 @@
       }
     }
   };
+
+  useSeoMeta({
+    title: res.value?.evento?.nome
+      ? res.value?.evento?.nome
+      : "Evento não encontrado",
+    description: `Página do evento ${
+      res.value?.evento?.nome ? res.value?.evento?.nome : " não encontrada"
+    }`,
+    ogTitle: res.value?.evento?.nome
+      ? res.value?.evento?.nome
+      : "Evento não encontrado",
+    ogDescription: `Página do evento ${
+      res.value?.evento?.nome ? res.value?.evento?.nome : " não encontrada"
+    }`,
+    ogType: "website",
+    ogImage: res.value?.evento?.imageUrl
+      ? config.public.url + "/" + res.value?.evento?.imageUrl
+      : config.public.url + "/images/og-image.png",
+    ogUrl: config.public.url + route.fullPath,
+    twitterImage: res.value?.evento?.imageUrl
+      ? config.public.url + "/" + res.value?.evento?.imageUrl
+      : config.public.url + "/images/og-image.png",
+    twitterCard: "summary_large_image",
+  });
 </script>
