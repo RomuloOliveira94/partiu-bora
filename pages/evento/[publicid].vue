@@ -1,6 +1,7 @@
 <script setup lang="ts">
   import useFetchPublicEvent from "~/composables/UseFetchPublicEvent";
   import { gerarAvataresAleatorios } from "~/helpers/static";
+  import { handleWhatsApp } from "~/helpers";
   import type { FormSubmitEvent } from "#ui/types";
   import useSubmitParticipate from "~/composables/useSubmitParticipate";
 
@@ -18,23 +19,35 @@
     isPart
   );
 
-  useSeoMeta({
-    title: "Evento",
-    description: `Página do evento ${
-      res.value?.evento?.nome ? res.value?.evento?.nome : " não encontrada"
-    }`,
-  });
-
   const items = ref(gerarAvataresAleatorios(24));
 
   const handleRefreshAvatars = () => {
     items.value = gerarAvataresAleatorios(24);
   };
 
-  const handleWhatsApp = (telefone: string) => {
-    let clearedNumber = telefone.replace(/\D/g, "");
-    window.open(`https://wa.me/+55${clearedNumber}`);
-  };
+  useSeoMeta({
+    title: res.value?.evento?.nome
+      ? res.value?.evento?.nome
+      : "Evento não encontrado",
+    description: `Página do evento ${
+      res.value?.evento?.nome ? res.value?.evento?.nome : " não encontrada"
+    }`,
+    ogTitle: res.value?.evento?.nome
+      ? res.value?.evento?.nome
+      : "Evento não encontrado",
+    ogDescription: `Página do evento ${
+      res.value?.evento?.nome ? res.value?.evento?.nome : " não encontrada"
+    }`,
+    ogType: "website",
+    ogImage: res.value?.evento?.imageUrl
+      ? config.public.url + '/' + res.value?.evento?.imageUrl
+      : config.public.url + "/images/og-image.png",
+    ogUrl: config.public.url + route.fullPath,
+    twitterImage: res.value?.evento?.imageUrl
+      ? config.public.url + '/' + res.value?.evento?.imageUrl
+      : config.public.url + "/images/og-image.png",
+    twitterCard: "summary_large_image",
+  });
 </script>
 
 <template>
@@ -60,7 +73,10 @@
           :config="config"
           @confirmPresence="showConfirmModal = true"
         />
-        <EventGuestsComponent :convidados="evento?.evento?.convidados" />
+        <EventGuestsComponent
+          :convidados="evento?.evento?.convidados"
+          @handleWhatsApp="handleWhatsApp"
+        />
       </div>
       <template
         v-if="
@@ -84,7 +100,6 @@
         :schema="schema"
         :items="items"
         @handleRefreshAvatars="handleRefreshAvatars"
-        @handleWhatsApp="handleWhatsApp"
         @submit="onSubmit"
       />
     </UModal>
