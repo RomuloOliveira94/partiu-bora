@@ -27,6 +27,6 @@
 
 <style>
   div {
-    font-family: Poppins, sans-serif;
+    font-family: Belanosima, sans-serif;
   }
 </style>
