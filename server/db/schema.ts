@@ -3,6 +3,7 @@ import { text, integer, sqliteTable } from "drizzle-orm/sqlite-core";
 export const eventos = sqliteTable("eventos", {
   id: integer("id").primaryKey(),
   nome: text("nome").notNull(),
+  local: text("local"),
   registranteNome: text("registrante_nome").notNull(),
   registranteWhatsApp: text("registrante_whatsapp").notNull(),
   imageUrl: text("imagem_url"),

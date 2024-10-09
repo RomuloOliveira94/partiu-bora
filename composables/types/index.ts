@@ -4,12 +4,7 @@ export interface Response {
       id: number;
       nome: string;
       data: number;
-      descricao: string;
       local: string;
-      endereco: string;
-      cidade: string;
-      estado: string;
-      pais: string;
       imageUrl: string;
       linkPublico: string;
       linkAdmin: string;

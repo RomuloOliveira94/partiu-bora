@@ -5,6 +5,7 @@ import { eventos, NovoEvento } from "../db/schema";
 interface IBody {
   data: {
     evento: string;
+    local: string;
     registrante: string;
     registranteWhatsApp: string;
     quantidadeMaxima: number;
@@ -23,6 +24,7 @@ export default defineEventHandler<{ body: IBody }>(async (event) => {
   }
 
   let nome = body.data.evento;
+  let local = body.data.local;
   let registranteNome = body.data.registrante;
   let registranteWhatsApp = body.data.registranteWhatsApp;
   let quantidadeMaxima = body.data.quantidadeMaxima;
@@ -46,6 +48,7 @@ export default defineEventHandler<{ body: IBody }>(async (event) => {
 
   const eventData: NovoEvento = {
     nome,
+    local,
     registranteNome,
     registranteWhatsApp,
     quantidadeMaxima,
