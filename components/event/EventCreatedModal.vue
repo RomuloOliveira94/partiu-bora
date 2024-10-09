@@ -2,9 +2,7 @@
   <UModal
     :model-value="eventCreated"
     @update:model-value="updateEventCreated"
-    :ui="{
-      width: 'w-[1200px]',
-    }"
+    fullscreen
   >
     <UCard
       :ui="{

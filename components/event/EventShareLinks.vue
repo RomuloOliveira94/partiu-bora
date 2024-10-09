@@ -1,9 +1,6 @@
 <template>
   <UCard
-    :ui="{
-      ring: '',
-      divide: 'divide-y divide-gray-100 dark:divide-gray-800',
-    }"
+  class="mt-6"
   >
     <div>
       <div class="grid gap-2">
@@ -30,7 +27,7 @@
               />
             </UButton>
             <h3>Link para o evento (copiar):</h3>
-            <div class="flex items-center flex-wrap mt-2 md:mt-0 md:gap-2">
+            <div class="flex items-center flex-wrap mt-2 md:mt-0 gap-1.5">
               <UButton
                 size="sm"
                 color="primary"
@@ -72,7 +69,7 @@
               />
             </UButton>
             <h2>Link para o evento (copiar):</h2>
-            <div class="flex items-center flex-wrap mt-2 md:mt-0 md:gap-2">
+            <div class="flex items-center flex-wrap mt-2 md:mt-0 gap-1.5">
               <UButton
                 size="sm"
                 color="primary"

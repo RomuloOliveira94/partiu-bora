@@ -7,6 +7,7 @@
 
   const config = useRuntimeConfig();
   const appUrl = config.public.url;
+  const showImgs = ref(false);
 
   const eventCreated = ref(false);
   const eventCreatedData = reactive<Evento>({
@@ -68,8 +69,12 @@
   }
 
   function handleSelect(item: string) {
+    if (state.imageUrl === item) {
+      state.imageUrl = "";
+      return;
+    }
+
     state.imageUrl = item;
-    console.log(item);
   }
 
   function devButton() {
@@ -87,14 +92,34 @@
     <title>Home</title>
     <meta name="description" content="Home page" />
   </Head>
-  <div>
+  <UCard>
+    <template #header>
+      <h1 class="md:text-2xl font-semibold">
+        Crie seu evento ou compromisso (É gratis!
+        <UIcon name="emojione-v1:winking-face" />):
+      </h1>
+    </template>
+
     <UButton
       v-if="config.public.environment === 'development'"
       @click="devButton"
-      >Preencher formulário</UButton
+      class="mb-6"
+      icon="i-heroicons-code-bracket"
+      trailing
+      >Dev</UButton
     >
     <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
-      <div class="flex items-center flex-col md:flex-row gap-4 w-full">
+      <UFormGroup label="Nome do evento" name="evento">
+        <UInput
+          v-model="state.evento"
+          type="text"
+          size="sm"
+          icon="i-heroicons-newspaper"
+        />
+      </UFormGroup>
+      <div
+        class="flex items-center flex-col justify-center md:flex-row gap-4 w-full"
+      >
         <UFormGroup label="Seu nome" name="registrante" class="w-full">
           <UInput
             v-model="state.registrante"
@@ -119,15 +144,6 @@
         </UFormGroup>
       </div>
 
-      <UFormGroup label="Nome do evento" name="evento">
-        <UInput
-          v-model="state.evento"
-          type="text"
-          size="sm"
-          icon="i-heroicons-newspaper"
-        />
-      </UFormGroup>
-
       <UFormGroup label="Data e Hora" name="data">
         <UInput
           v-model="state.data"
@@ -149,8 +165,35 @@
           v-maska="'######'"
         />
       </UFormGroup>
+
       <UFormGroup label="Imagem para o evento (opcional)" name="imageUrl">
-        <UCarousel v-slot="{ item }" :items="images" arrows>
+        <template #label>
+          <div
+            class="flex items-start flex-col justify-center md:flex-row md:items-center gap-4 mb-2"
+          >
+            Imagem para o evento (opcional)
+            <div>
+              <UButton
+                @click="
+                  showImgs = !showImgs;
+                  state.imageUrl = '';
+                "
+                :icon="
+                  showImgs
+                    ? 'i-heroicons-photo-16-solid'
+                    : 'zondicons:close-outline'
+                "
+                trailing
+                size="md"
+                class="text-sm font-semibold"
+                >{{
+                  showImgs ? "Esconder imagens" : "Mostrar imagens"
+                }}</UButton
+              >
+            </div>
+          </div>
+        </template>
+        <UCarousel v-if="showImgs" v-slot="{ item }" :items="images" arrows>
           <img
             @click="handleSelect(item)"
             :src="item"
@@ -165,7 +208,7 @@
           type="submit"
           icon="i-heroicons-check-circle"
           size="xl"
-          class="text-xl font-semibold"
+          class="text-xl font-semibold mt-8"
           trailing
         >
           Criar Evento!
@@ -180,5 +223,5 @@
       :eventCreatedData="eventCreatedData"
       :appUrl="appUrl"
     />
-  </div>
+  </UCard>
 </template>

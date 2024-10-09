@@ -23,7 +23,8 @@
       </p>
     </div>
     <NuxtImg
-      :src="evento.imageUrl || '/images/evento-default.jpg'"
+      v-if="evento.imageUrl"
+      :src="evento.imageUrl"
       :alt="'Imagem do evento: ' + evento.nome"
       class="rounded-md w-full h-44 md:w-44 md:h-32 object-cover"
     />

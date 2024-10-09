@@ -50,16 +50,25 @@
       >
         <div>
           <h1
-            class="text-2xl font-bold sm:text-3xl hover:text-primary cursor-pointer"
+            class="text-2xl font-bold sm:text-3xl hover:text-primary cursor-pointer tw-flex tw-items-center tw-gap-2"
             @click="router.push('/')"
           >
+            <UIcon name="emojione:waving-hand" />
             Partiu Bora?
           </h1>
-
-          <p class="mt-1.5 text-sm">
-            Organize um evento ou compromisso de forma simples e rápida, e
-            convide seus amigos para participar.
-          </p>
+          <div class="mt-6">
+            <p class="mt-1.5 md:text-lg text-sm">
+              Organize um evento ou compromisso de forma simples e rápida, e
+              convide seus amigos para participar.
+            </p>
+            <p class="flex items-center gap-2 mt-2 md:text-lg">
+              Compartilhe via:
+              <UIcon name="logos:whatsapp-icon" class="w-8 h-8" />
+              <UIcon name="logos:telegram" class="w-8 h-8" />
+              <UIcon name="logos:facebook" class="w-8 h-8" />
+              <UIcon name="logos:bluesky" class="w-8 h-8" />
+            </p>
+          </div>
         </div>
 
         <div class="flex items-center flex-wrap gap-4">
