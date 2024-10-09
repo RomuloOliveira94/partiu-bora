@@ -12,17 +12,19 @@
         <small
           >Criado por: <strong>{{ evento.registranteNome }}</strong></small
         >
-        <small class="flex items-center gap-1"
+        <small class="flex items-center gap-1 text-md"
           ><UIcon name="i-logos:whatsapp-icon" class="w-4 h-4" />
           {{ evento.registranteWhatsApp }}</small
         >
       </div>
       <div>
-        <p>
+        <p class="text-lg">
+          <UIcon name="twemoji:spiral-calendar" class="w-4 h-4 mr-1" />
           <strong>Data: </strong>
           {{ formatDateTime(evento.data) }}
         </p>
-        <p>
+        <p class="text-lg">
+          <UIcon name="twemoji:round-pushpin" class="w-4 h-4 mr-1" />
           <strong>Local: </strong>
           {{ evento.local }}
         </p>

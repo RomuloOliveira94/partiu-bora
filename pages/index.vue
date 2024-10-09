@@ -59,8 +59,7 @@
       eventCreatedData.data = criar.body.data.data;
       eventCreatedData.local = criar.body.data.local;
       eventCreatedData.registranteNome = criar.body.data.registranteNome;
-      eventCreatedData.registranteWhatsApp =
-        criar.body.data.registranteWhatsApp;
+      eventCreatedData.registranteWhatsApp = criar.body.data.registranteWhatsApp;
       eventCreatedData.quantidadeMaxima = criar.body.data.quantidadeMaxima;
       eventCreatedData.linkPublico = criar.body.data.linkPublico;
       eventCreatedData.linkAdmin = criar.body.data.linkAdmin;

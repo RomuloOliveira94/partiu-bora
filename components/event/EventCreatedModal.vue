@@ -13,9 +13,10 @@
       <template #header>
         <div class="flex items-center justify-between">
           <h2
-            class="text-xl font-semibold leading-6 text-gray-900 dark:text-white"
+            class="text-2xl md:text-3xl font-semibold leading-6 text-gray-900 dark:text-white"
           >
             Evento criado com sucesso!
+            <UIcon name="twemoji:party-popper" class="ml-1" />
           </h2>
           <UButton
             color="gray"
@@ -28,7 +29,7 @@
       </template>
       <div>
         <EventHeader :evento="eventCreatedData" />
-        <div class="grid place-content-center gap-4">
+        <div class="grid gap-4">
           <EventShareLinks
             v-if="eventCreatedData"
             :evento="eventCreatedData"
@@ -42,8 +43,6 @@
 
 <script setup lang="ts">
   import type { Evento } from "~/server/db/schema";
-  import { formatDateTime } from "~/helpers";
-
   defineProps<{
     eventCreated: boolean;
     eventCreatedData: Evento;
