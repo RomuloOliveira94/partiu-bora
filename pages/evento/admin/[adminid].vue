@@ -38,6 +38,7 @@
 <script setup lang="ts">
   import { ref } from "vue";
   import useFetchAdminEvent from "~/composables/UseFetchAdminEvent";
+  import { handleWhatsApp } from "~/helpers";
 
   const route = useRoute();
   const toast = useToast();
@@ -86,10 +87,5 @@
         });
       }
     }
-  };
-
-  const handleWhatsApp = (telefone: string) => {
-    let clearedNumber = telefone.replace(/\D/g, "");
-    window.open(`https://wa.me/+55${clearedNumber}`);
   };
 </script>

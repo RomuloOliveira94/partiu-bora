@@ -17,10 +17,16 @@
           {{ evento.registranteWhatsApp }}</small
         >
       </div>
-      <p>
-        Data:
-        <strong>{{ formatDateTime(evento.data) }}</strong>
-      </p>
+      <div>
+        <p>
+          <strong>Data: </strong>
+          {{ formatDateTime(evento.data) }}
+        </p>
+        <p>
+          <strong>Local: </strong>
+          {{ evento.local }}
+        </p>
+      </div>
     </div>
     <NuxtImg
       v-if="evento.imageUrl"

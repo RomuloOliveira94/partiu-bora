@@ -13,6 +13,7 @@
   const eventCreatedData = reactive<Evento>({
     nome: "",
     data: 0,
+    local: "",
     registranteNome: "",
     registranteWhatsApp: "",
     quantidadeMaxima: 0,
@@ -26,6 +27,7 @@
   const schema = v.object({
     evento: v.string("O nome do evento é obrigatório."),
     data: v.string("A data do evento é obrigatória."),
+    local: v.optional(v.string()),
     quantidadeMaxima: v.optional(v.string()),
     registrante: v.string("O seu nome é obrigatório."),
     registranteWhatsApp: v.string("O seu WhatsApp é obrigatório."),
@@ -35,12 +37,13 @@
   type Schema = v.InferOutput<typeof schema>;
 
   const state = reactive({
-    evento: "",
-    data: "",
-    quantidadeMaxima: "",
-    registrante: "",
-    registranteWhatsApp: "",
-    imageUrl: "",
+    evento: undefined as string | undefined,
+    local: undefined as string | undefined,
+    data: undefined as string | undefined,
+    quantidadeMaxima: undefined as string | undefined,
+    registrante: undefined as string | undefined,
+    registranteWhatsApp: undefined as string | undefined,
+    imageUrl: undefined as string | undefined,
   });
 
   async function onSubmit(event: FormSubmitEvent<Schema>) {
@@ -54,6 +57,7 @@
       console.log(criar);
       eventCreatedData.nome = criar.body.data.nome;
       eventCreatedData.data = criar.body.data.data;
+      eventCreatedData.local = criar.body.data.local;
       eventCreatedData.registranteNome = criar.body.data.registranteNome;
       eventCreatedData.registranteWhatsApp =
         criar.body.data.registranteWhatsApp;
@@ -70,7 +74,7 @@
 
   function handleSelect(item: string) {
     if (state.imageUrl === item) {
-      state.imageUrl = "";
+      state.imageUrl = undefined;
       return;
     }
 
@@ -80,6 +84,7 @@
   function devButton() {
     state.evento = "Evento teste";
     state.data = "2022-12-31T23:59";
+    state.local = "Local teste";
     state.registrante = "Fulano";
     state.registranteWhatsApp = "(99) 99999-9999";
     state.imageUrl = images[0];
@@ -94,7 +99,7 @@
   </Head>
   <UCard>
     <template #header>
-      <h1 class="md:text-2xl font-semibold">
+      <h1 class="md:text-2xl text-xl font-semibold">
         Crie seu evento ou compromisso (É gratis!
         <UIcon name="emojione-v1:winking-face" />):
       </h1>
@@ -115,8 +120,20 @@
           type="text"
           size="sm"
           icon="i-heroicons-newspaper"
+          placeholder="Digite o nome do evento/compromisso"
         />
       </UFormGroup>
+
+      <UFormGroup label="Local (opcional)" name="local">
+        <UInput
+          v-model="state.local"
+          type="text"
+          size="sm"
+          icon="i-heroicons-home-solid"
+          placeholder="Digite o local do evento/compromisso"
+        />
+      </UFormGroup>
+
       <div
         class="flex items-center flex-col justify-center md:flex-row gap-4 w-full"
       >
@@ -126,6 +143,7 @@
             type="text"
             size="sm"
             icon="i-heroicons-user-circle-16-solid"
+            placeholder="Digite seu nome"
           />
         </UFormGroup>
         <UFormGroup
@@ -163,6 +181,7 @@
           size="sm"
           icon="i-heroicons-user-group-solid"
           v-maska="'######'"
+          placeholder="Digite a quantidade máxima"
         />
       </UFormGroup>
 
@@ -180,8 +199,8 @@
                 "
                 :icon="
                   showImgs
-                    ? 'i-heroicons-photo-16-solid'
-                    : 'zondicons:close-outline'
+                    ? 'zondicons:close-outline'
+                    : 'i-heroicons-photo-16-solid'
                 "
                 trailing
                 size="md"
@@ -197,8 +216,10 @@
           <img
             @click="handleSelect(item)"
             :src="item"
-            :class="item === state.imageUrl ? 'border-2 border-green-500' : ''"
-            class="cursor-pointer hover:border-green-500 hover:border-2 rounded-md mx-1 md:w-[250px] w-[250px] h-full object-cover"
+            :class="
+              item === state.imageUrl ? 'border-8 border-primary shadow-lg' : ''
+            "
+            class="cursor-pointer hover:border-primary hover:border-8 rounded-md mx-1 md:w-[250px] w-[250px] h-full object-cover"
             draggable="false"
           />
         </UCarousel>
