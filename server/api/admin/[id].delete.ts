@@ -3,7 +3,6 @@ import db from "~/server/db";
 import { participantes } from "~/server/db/schema";
 
 export default defineEventHandler(async (event) => {
-  console.log("Deletar convidado");
   const id = getRouterParam(event, "adminid");
 
   if (!id) {

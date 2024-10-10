@@ -12,8 +12,6 @@ interface IBody {
 export default defineEventHandler<{ body: IBody }>(async (event) => {
   const publicoid = getRouterParam(event, "publicoid");
   const body = await readBody(event);
-  console.log("Publicoid: ", publicoid);
-  console.log("Body: ", body);
 
   if (!publicoid) {
     return { status: 404, body: { error: "Evento não encontrado" } };

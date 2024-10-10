@@ -62,8 +62,6 @@
         method: "DELETE",
       });
       const { status } = response;
-      console.log(status);
-      console.log(response);
 
       if (status === 200) {
         evento.value.evento.convidados = evento.value.evento.convidados.filter(

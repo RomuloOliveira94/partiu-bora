@@ -12,7 +12,6 @@ interface Response {
 
 export default defineEventHandler(async (event): Promise<Response> => {
   const codigo = getRouterParam(event, "id");
-  console.log(codigo);
 
   if (!codigo) {
     return { status: 404, body: { error: "Evento não encontrado" } };

@@ -68,8 +68,6 @@ export default defineEventHandler<{ body: IBody }>(async (event) => {
     };
   }
 
-  console.log(created);
-
   return {
     statusCode: 200,
     body: {

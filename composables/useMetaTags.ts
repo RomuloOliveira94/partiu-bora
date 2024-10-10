@@ -2,7 +2,6 @@ import type { Response } from "./types";
 
 export default function useMetaTags(evento: Response["evento"] | undefined) {
   const config = useRuntimeConfig();
-  console.log(!evento);
   if (!evento) return {};
   const image = evento.imageUrl
     ? config.public.url + "/" + evento.imageUrl

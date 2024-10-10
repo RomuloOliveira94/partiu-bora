@@ -53,8 +53,6 @@
     });
 
     if (criar.statusCode === 200) {
-      console.log("Evento criado com sucesso!");
-      console.log(criar);
       eventCreatedData.nome = criar.body.data.nome;
       eventCreatedData.data = criar.body.data.data;
       eventCreatedData.local = criar.body.data.local;
@@ -67,7 +65,6 @@
       eventCreatedData.dataDaCriacao = criar.body.data.dataDaCriacao;
       eventCreatedData.id = criar.body.data.id;
       eventCreated.value = true;
-      console.log(eventCreated.value);
     }
   }
 
