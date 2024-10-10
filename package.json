@@ -1,5 +1,5 @@
 {
-  "name": "nuxt-app",
+  "name": "partiu-bora-app",
   "private": true,
   "type": "module",
   "scripts": {
@@ -22,7 +22,7 @@
     "drizzle-orm": "^0.33.0",
     "maska": "^3.0.2",
     "nanoid": "^5.0.7",
-    "nuxt": "^3.13.0",
+    "nuxt": "^3.13.2",
     "valibot": "^0.42.1",
     "vue": "latest",
     "vue-router": "latest"
