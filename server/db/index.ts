@@ -1,4 +1,4 @@
-// import { config } from "dotenv";
+ import { config } from "dotenv";
 // config({ path: ".env" });
 /* import { drizzle } from "drizzle-orm/better-sqlite3";
 import Database from "better-sqlite3"; */
@@ -6,14 +6,15 @@ import Database from "better-sqlite3"; */
 import { drizzle as prodDrizzle } from "drizzle-orm/libsql";
 import { createClient } from "@libsql/client";
 
-const config = useRuntimeConfig();
+config({ path: ".env" });
+
 let sqlite;
 let db: any;
 
 // if (config.environment === "production") {
 sqlite = createClient({
-  url: config.tursoConnectionUrl,
-  authToken: config.tursoAuthToken,
+  url: process.env.NUXT_TURSO_CONNECTION_URL!,
+  authToken: process.env.NUXT_TURSO_AUTH_TOKEN!,
 });
 db = prodDrizzle(sqlite);
 // } else {

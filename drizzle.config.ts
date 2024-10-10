@@ -12,8 +12,8 @@ configuration = defineConfig({
   dialect: "sqlite",
   driver: "turso",
   dbCredentials: {
-    url: process.env.NUXT_TURSO_CONNECTION_URL || "",
-    authToken: process.env.NUXT_TURSO_AUTH_TOKEN || "",
+    url: process.env.NUXT_TURSO_CONNECTION_URL!,
+    authToken: process.env.NUXT_TURSO_AUTH_TOKEN!,
   },
 });
 // } else {
