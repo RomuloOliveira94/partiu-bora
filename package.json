@@ -28,6 +28,7 @@
     "vue-router": "latest"
   },
   "devDependencies": {
+    "@iconify-json/twemoji": "^1.2.1",
     "drizzle-kit": "^0.24.2"
   }
 }

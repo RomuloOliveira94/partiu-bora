@@ -1,47 +1,7 @@
 <script setup lang="ts">
-  import type { FormSubmitEvent } from "#ui/types";
-  import * as v from "valibot";
-  const toast = useToast();
   const router = useRouter();
-
-  const showEventSearch = ref(false);
-
-  const schema = v.object({
-    codigo: v.pipe(
-      v.string("O código é obrigatório"),
-      v.minLength(10, "O código deve ter no mínimo 10 caracteres"),
-      v.maxLength(10, "O código deve ter no máximo 10 caracteres")
-    ),
-  });
-
-  type Schema = v.InferOutput<typeof schema>;
-
-  const state = reactive({
-    codigo: undefined,
-  });
-  const onSubmit = async (event: FormSubmitEvent<Schema>) => {
-    console.log(event.data.codigo);
-    const { body, status } = await $fetch(`/api/search/${event.data.codigo}`);
-
-    if (status === 200) {
-      const codigo =
-        body.evento?.linkPublico === state.codigo
-          ? body.evento?.linkPublico
-          : `admin/${body.evento?.linkAdmin}`;
-      router.push(`/evento/${codigo}`);
-      showEventSearch.value = false;
-    } else {
-      toast.add({
-        title: "Erro",
-        description: "Evento não encontrado",
-        icon: "i-noto:face-with-diagonal-mouth",
-        timeout: 2000,
-      });
-      showEventSearch.value = false;
-    }
-  };
+  const { showEventSearch, state, schema, onSubmit } = useSearchEvent();
 </script>
-
 <template>
   <header class="border-b border-gray-200 border-opacity-10 bg-transparent">
     <div class="container mx-auto py-8 sm:px-6 sm:py-12 p-8">

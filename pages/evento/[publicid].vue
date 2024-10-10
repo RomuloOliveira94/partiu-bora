@@ -8,9 +8,11 @@
   const config = useRuntimeConfig();
   const route = useRoute();
   const publicid = ref(route.params.publicid);
-  const { res } = useFetchPublicEvent(publicid);
+  const { res } = await useFetchPublicEvent(publicid);
 
   const evento = ref(res);
+  useMetaTags(evento.value?.evento);
+
   const showConfirmModal = ref(false);
   const isPart = useCookie(`evento-${publicid.value}`);
   const { state, schema, onSubmit } = useSubmitParticipate(
@@ -24,30 +26,6 @@
   const handleRefreshAvatars = () => {
     items.value = gerarAvataresAleatorios(24);
   };
-
-  useSeoMeta({
-    title: res.value?.evento?.nome
-      ? res.value?.evento?.nome
-      : "Evento não encontrado",
-    description: `Página do evento ${
-      res.value?.evento?.nome ? res.value?.evento?.nome : " não encontrada"
-    }`,
-    ogTitle: res.value?.evento?.nome
-      ? res.value?.evento?.nome
-      : "Evento não encontrado",
-    ogDescription: `Página do evento ${
-      res.value?.evento?.nome ? res.value?.evento?.nome : " não encontrada"
-    }`,
-    ogType: "website",
-    ogImage: res.value?.evento?.imageUrl
-      ? config.public.url + '/' + res.value?.evento?.imageUrl
-      : config.public.url + "/images/og-image.png",
-    ogUrl: config.public.url + route.fullPath,
-    twitterImage: res.value?.evento?.imageUrl
-      ? config.public.url + '/' + res.value?.evento?.imageUrl
-      : config.public.url + "/images/og-image.png",
-    twitterCard: "summary_large_image",
-  });
 </script>
 
 <template>
