@@ -9,16 +9,14 @@ export default defineNuxtConfig({
     "@nuxthub/core",
   ],
   runtimeConfig: {
-    environment: "",
-    tursoConnectionUrl: "",
-    tursoAuthToken:"", 
+    environment: "production",
+    tursoConnectionUrl: process.env.TURSO_DB_URL,
+    tursoAuthToken: process.env.TURSO_DB_TOKEN, 
     public: {
-      environment: "",
+      environment: "production",
       url: "",
       apiUrl: "",
-    }
-  },
-  nitro: {
-    preset: "cloudflare-pages",
+    },
+    nodeEnv: process.env.NODE_ENV,
   },
 });

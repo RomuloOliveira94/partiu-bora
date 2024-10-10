@@ -1,8 +1,4 @@
-import { config } from "dotenv";
 import { defineConfig } from "drizzle-kit";
-
-config({ path: ".env" });
-
 let configuration;
 
 //if (process.env.NODE_ENV === "production") {
@@ -12,8 +8,8 @@ configuration = defineConfig({
   dialect: "sqlite",
   driver: "turso",
   dbCredentials: {
-    url: process.env.NUXT_TURSO_CONNECTION_URL!,
-    authToken: process.env.NUXT_TURSO_AUTH_TOKEN!,
+    url: process.env.TURSO_DB_URL!,
+    authToken: process.env.TURSO_DB_TOKEN!,
   },
 });
 // } else {
