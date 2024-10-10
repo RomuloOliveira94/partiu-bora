@@ -8,7 +8,8 @@
     ogTitle: "Partiu Bora?",
     ogDescription:
       "Organize seus eventos de forma simples e rápida, e convide seus amigos para participar.",
-    ogImage: config.public.url + "/og-image.png",
+    ogImage: config.public.url + "/images/partiu.webp",
+    twitterImage: config.public.url + "/images/partiu.webp",
     twitterCard: "summary_large_image",
   });
 </script>
