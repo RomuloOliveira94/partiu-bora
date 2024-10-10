@@ -1,75 +1,27 @@
-# Nuxt 3 Minimal Starter
+<!--- # "Can be a image or a gift from the project pages" -->
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+![image](https://github.com/user-attachments/assets/fe338c4b-8963-41d4-8225-aae96b1c6d17)
 
-## Setup
 
-Make sure to install the dependencies:
+# Partiu Bora?
 
-```bash
-# npm
-npm install
+Web app para marcação e compartilhamento de eventos ou compromisso com amigos e familiares.
 
-# pnpm
-pnpm install
+## Tech Stack
 
-# yarn
-yarn install
+<!--- # "Verify icons availability here https://github.com/tandpfun/skill-icons" -->
 
-# bun
-bun install
-```
+[![My Skills](https://skillicons.dev/icons?i=js,ts,nuxtjs,vue,tailwind,nodejs,sqlite)](https://skillicons.dev)
 
-## Development Server
+## Getting Started
 
-Start the development server on `http://localhost:3000`:
+1. **Install Dependencies**: `bun install`
+3. **Environment variables**: Copy `.env.example` to a new `.env.local`
+4. **Database Setup**: `bun generate & bun migrate`
+5. **Start Developing**: `bun dev`
 
-```bash
-# npm
-npm run dev
+## License
 
-# pnpm
-pnpm run dev
+This software is available under the following licenses:
 
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+- [MIT](https://rem.mit-license.org)
