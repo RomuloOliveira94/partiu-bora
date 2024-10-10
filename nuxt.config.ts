@@ -18,4 +18,7 @@ export default defineNuxtConfig({
       apiUrl: "",
     }
   },
+  nitro: {
+    preset: "cloudflare-pages",
+  },
 });
