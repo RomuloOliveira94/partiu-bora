@@ -13,5 +13,4 @@ export default defineNuxtConfig({
       apiUrl: "",
     }
   },
-  ssr: false,
 });
