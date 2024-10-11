@@ -1,14 +1,14 @@
 <script setup lang="ts">
-   const url = useRequestURL()
-
+  const config = useRuntimeConfig();
   useSeoMeta({
     title: "Partiu Bora?",
     description:
       "Organize seus eventos de forma simples e rápida, e convide seus amigos para participar.",
     ogTitle: "Partiu Bora?",
-    ogImage: url + "images/og-image.png",
+    ogImage: config.public.url + "/images/og-image.png",
     ogDescription:
       "Organize seus eventos de forma simples e rápida, e convide seus amigos para participar.",
+    ogUrl: config.public.url,
     twitterCard: "summary_large_image",
   });
 

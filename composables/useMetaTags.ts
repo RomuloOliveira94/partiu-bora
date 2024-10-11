@@ -1,4 +1,3 @@
-import { formatDateTime } from "~/helpers";
 import type { Response } from "./types";
 
 export default function useMetaTags(evento: Response["evento"] | undefined) {
@@ -14,7 +13,7 @@ export default function useMetaTags(evento: Response["evento"] | undefined) {
     `${evento.nome} criado por ${evento.registranteNome}`
   );
   const ogType = ref<"website">("website");
-  const ogUrl = ref(config.public.url + "/" + evento.linkPublico);
+  const ogUrl = ref(`${config.public.url}/evento/${evento.linkPublico}`);
   const twitterCard = ref<"summary_large_image">("summary_large_image");
 
   // defineOgImageComponent("ShareEvent", {
