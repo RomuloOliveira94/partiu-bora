@@ -7,8 +7,6 @@ export default defineNuxtConfig({
     "@nuxt/image",
     "@nuxt/fonts",
     "nuxt-og-image",
-    "@nuxtjs/robots",
-    "@nuxtjs/sitemap",
   ],
   runtimeConfig: {
     environment: "production",
@@ -26,9 +24,5 @@ export default defineNuxtConfig({
       emojis: "twemoji",
     },
     fonts: ["Belanosima"],
-  },
-  site: {
-    url: "https://partiu-bora.nuxt.dev",
-    name: "Partiu Bora? - Compartilhamento de Eventos e Compromissos",
-  },
+  }
 });
