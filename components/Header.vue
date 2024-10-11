@@ -1,5 +1,6 @@
 <script setup lang="ts">
   const router = useRouter();
+  const navigateHome = () => router.push("/");
   const { showEventSearch, state, schema, onSubmit } = useSearchEvent();
 </script>
 <template>
@@ -9,13 +10,7 @@
         class="flex flex-col items-start gap-4 md:flex-row md:items-center md:justify-between"
       >
         <div>
-          <h1
-            class="text-2xl font-bold sm:text-3xl hover:text-primary cursor-pointer tw-flex tw-items-center tw-gap-2"
-            @click="router.push('/')"
-          >
-            <UIcon name="emojione:waving-hand" />
-            Partiu Bora?
-          </h1>
+          <Logo @navigate="navigateHome" />
           <div class="mt-6">
             <p class="mt-1.5 md:text-lg">
               Organize um evento ou compromisso de forma simples e rápida, e

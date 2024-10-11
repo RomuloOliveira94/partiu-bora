@@ -8,9 +8,16 @@
     ogTitle: "Partiu Bora?",
     ogDescription:
       "Organize seus eventos de forma simples e rápida, e convide seus amigos para participar.",
-    ogImage: config.public.url + "/images/partiu.webp",
     twitterImage: config.public.url + "/images/partiu.webp",
     twitterCard: "summary_large_image",
+  });
+
+  defineOgImageComponent("NuxtSeo", {
+    title: "Partiu Bora? 👋",
+    description:
+      "Organize seus eventos ou compromissos de forma simples e rápida, e convide seus amigos para participar.",
+    theme: "#96B6FF",
+    colorMode: "light",
   });
 </script>
 
