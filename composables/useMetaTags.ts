@@ -17,12 +17,12 @@ export default function useMetaTags(evento: Response["evento"] | undefined) {
   const ogUrl = ref(config.public.url + "/" + evento.linkPublico);
   const twitterCard = ref<"summary_large_image">("summary_large_image");
 
-  defineOgImageComponent("ShareEvent", {
-    title: evento.nome,
-    date: formatDateTime(evento.data),
-    user: evento.registranteNome,
-    local: evento.local,
-  });
+  // defineOgImageComponent("ShareEvent", {
+  //   title: evento.nome,
+  //   date: formatDateTime(evento.data),
+  //   user: evento.registranteNome,
+  //   local: evento.local,
+  // });
 
   useSeoMeta({
     title,

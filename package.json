@@ -22,7 +22,6 @@
     "maska": "^3.0.2",
     "nanoid": "^5.0.7",
     "nuxt": "^3.13.2",
-    "nuxt-og-image": "^3.0.4",
     "valibot": "^0.42.1",
     "vue": "latest",
     "vue-router": "latest"

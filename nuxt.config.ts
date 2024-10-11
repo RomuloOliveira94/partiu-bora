@@ -18,11 +18,11 @@ export default defineNuxtConfig({
       apiUrl: "",
     },
     nodeEnv: process.env.NODE_ENV,
-  },
-  ogImage: {
-    defaults: {
-      emojis: "twemoji",
-    },
-    fonts: ["Belanosima"],
   }
+  // ogImage: {
+  //   defaults: {
+  //     emojis: "twemoji",
+  //   },
+  //   fonts: ["Belanosima"],
+  // }
 });
