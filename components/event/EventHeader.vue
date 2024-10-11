@@ -12,8 +12,11 @@
         <small
           >Criado por: <strong>{{ evento.registranteNome }}</strong></small
         >
-        <small class="flex items-center gap-1 text-md hover:text-blue-500 hover:underline cursor-pointer" @click="handleWhatsApp(evento.registranteWhatsApp)">
-          ><UIcon name="i-logos:whatsapp-icon" class="w-6 h-6" />
+        <small
+          class="flex items-center gap-1 text-md hover:text-blue-500 hover:underline cursor-pointer"
+          @click="handleWhatsApp(evento.registranteWhatsApp)"
+        >
+          <UIcon name="i-logos:whatsapp-icon" class="w-6 h-6" />
           {{ evento.registranteWhatsApp }}</small
         >
       </div>
