@@ -6,7 +6,6 @@ export default defineNuxtConfig({
     "@nuxt/ui",
     "@nuxt/image",
     "@nuxt/fonts",
-    "@nuxthub/core",
     "nuxt-og-image",
     "@nuxtjs/robots",
     "@nuxtjs/sitemap",
