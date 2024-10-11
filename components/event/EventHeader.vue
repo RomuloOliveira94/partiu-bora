@@ -8,12 +8,12 @@
       >
         {{ evento.nome }}
       </h2>
-      <div class="flex items-center flex-wrap gap-2">
+      <div class="flex items-center flex-wrap gap-2 text-xl">
         <small
           >Criado por: <strong>{{ evento.registranteNome }}</strong></small
         >
-        <small class="flex items-center gap-1 text-md"
-          ><UIcon name="i-logos:whatsapp-icon" class="w-4 h-4" />
+        <small class="flex items-center gap-1 text-md hover:text-blue-500 hover:underline cursor-pointer" @click="handleWhatsApp(evento.registranteWhatsApp)">
+          ><UIcon name="i-logos:whatsapp-icon" class="w-6 h-6" />
           {{ evento.registranteWhatsApp }}</small
         >
       </div>
@@ -41,7 +41,7 @@
 
 <script setup lang="ts">
   import type { Response } from "~/composables/types";
-  import { formatDateTime } from "~/helpers";
+  import { formatDateTime, handleWhatsApp } from "~/helpers";
   import type { Evento } from "~/server/db/schema";
 
   defineProps<{

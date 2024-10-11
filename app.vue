@@ -1,9 +1,12 @@
 <script setup lang="ts">
+   const url = useRequestURL()
+
   useSeoMeta({
     title: "Partiu Bora?",
     description:
       "Organize seus eventos de forma simples e rápida, e convide seus amigos para participar.",
     ogTitle: "Partiu Bora?",
+    ogImage: url + "images/og-image.png",
     ogDescription:
       "Organize seus eventos de forma simples e rápida, e convide seus amigos para participar.",
     twitterCard: "summary_large_image",
