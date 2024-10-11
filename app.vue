@@ -1,6 +1,4 @@
 <script setup lang="ts">
-  const config = useRuntimeConfig();
-
   useSeoMeta({
     title: "Partiu Bora?",
     description:
@@ -8,7 +6,6 @@
     ogTitle: "Partiu Bora?",
     ogDescription:
       "Organize seus eventos de forma simples e rápida, e convide seus amigos para participar.",
-    twitterImage: config.public.url + "/images/partiu.webp",
     twitterCard: "summary_large_image",
   });
 
