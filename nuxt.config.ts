@@ -13,7 +13,7 @@ export default defineNuxtConfig({
     tursoAuthToken: process.env.TURSO_DB_TOKEN,
     public: {
       environment: "production",
-      url: "",
+      url: process.env.PUBLIC_URL!,
       apiUrl: "",
     },
     nodeEnv: process.env.NODE_ENV,
