@@ -4,7 +4,7 @@
   >
     <div class="grid gap-2">
       <h2
-        class="text-2xl font-semibold leading-6 text-gray-900 dark:text-white"
+        class="text-2xl font-semibold leading-6 text-gray-900"
       >
         {{ evento.nome }}
       </h2>
@@ -13,7 +13,7 @@
           >Criado por: <strong>{{ evento.registranteNome }}</strong></small
         >
         <small
-          class="flex items-center gap-1 text-md hover:text-neutral-700 dark:hover:text-neutral-300 hover:underline cursor-pointer"
+          class="flex items-center gap-1 text-md hover:text-neutral-700 hover:underline cursor-pointer"
           @click="handleWhatsApp(evento.registranteWhatsApp)"
         >
           <UIcon name="i-logos:whatsapp-icon" class="w-6 h-6" />
@@ -31,7 +31,7 @@
           <strong>Local: </strong>
           {{ evento.local }}
         </p>
-        <p v-if="evento.descricao" class="mt-2 text-base text-gray-600 dark:text-gray-400 whitespace-pre-wrap">
+        <p v-if="evento.descricao" class="mt-2 text-base text-gray-600 whitespace-pre-wrap">
           {{ evento.descricao }}
         </p>
       </div>

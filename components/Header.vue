@@ -4,7 +4,7 @@
   const { showEventSearch, state, schema, onSubmit } = useSearchEvent();
 </script>
 <template>
-  <header class="border-b border-gray-200 dark:border-neutral-800 border-opacity-10">
+  <header class="border-b border-gray-200 border-opacity-10">
     <div class="container mx-auto py-4 sm:py-6 px-8">
       <div
         class="flex flex-col items-start gap-4 md:flex-row md:items-center md:justify-between"

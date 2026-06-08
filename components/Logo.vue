@@ -13,12 +13,5 @@
 </template>
 
 <script setup>
-  const colorMode = useColorMode();
-  const emit = defineEmits(["navigate"]);
-
-  const logoSrc = computed(() => {
-    return colorMode.value === "dark"
-      ? "/partiuboralogodark.png"
-      : "/partiuboralogolight.png";
-  });
+  const logoSrc = "/partiuboralogolight.png";
 </script>
