@@ -25,7 +25,7 @@
               :key="ev.adminId"
               color="white"
               variant="ghost"
-              class="w-full justify-between text-left px-4 py-3"
+              class="w-full justify-between text-left px-4 py-3 hover:bg-gray-100 dark:hover:bg-neutral-800 cursor-pointer transition-colors rounded-lg"
               @click="goToAdmin(ev.adminId)"
             >
               <span class="font-semibold truncate">{{ ev.nome }}</span>
