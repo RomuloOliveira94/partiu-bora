@@ -1,27 +1,6 @@
 <script setup lang="ts">
   const route = useRoute();
   const config = useRuntimeConfig();
-  const colorMode = useColorMode();
-
-  // Force light mode: run BEFORE Nuxt UI's anti-FOUC script to prevent dark flash
-  useHead({
-    script: [
-      {
-        innerHTML: `
-          (function() {
-            document.documentElement.classList.remove('dark');
-            try { localStorage.removeItem('nuxt-color-mode'); } catch(e) {}
-            try { localStorage.removeItem('nuxt-ui-color-mode'); } catch(e) {}
-          })();
-        `,
-        type: 'text/javascript',
-        tagPriority: 'critical',
-      },
-    ],
-  });
-
-  // Belt: also force preference after hydration
-  colorMode.preference = 'light';
 
   const isGuestEventPage = computed(
     () => route.path.startsWith("/evento/") && !route.path.includes("/admin/")

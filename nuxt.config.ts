@@ -1,12 +1,26 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: "2024-07-30",
+  app: {
+    head: {
+      htmlAttrs: {
+        'data-color-mode-forced': 'light',
+      },
+    },
+  },
   devtools: { enabled: process.env.NODE_ENV !== 'production' },
   modules: [
     "@nuxt/ui",
     "@nuxt/image",
     "@nuxt/fonts",
   ],
+  ui: {
+    colorMode: false, // Disable Nuxt UI colorMode module entirely
+  },
+  colorMode: {
+    preference: 'light',
+    fallback: 'light',
+  },
   runtimeConfig: {
     environment: "production",
     tursoConnectionUrl: process.env.TURSO_DB_URL,
