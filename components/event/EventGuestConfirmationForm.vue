@@ -1,12 +1,21 @@
 <template>
   <UCard
+    class="!bg-transparent dark:!bg-transparent"
     :ui="{
       ring: '',
       divide: 'divide-y divide-gray-100 dark:divide-gray-800',
     }"
   >
     <template #header>
-      <h1>Confirmação:</h1>
+      <div class="flex items-center justify-between w-full">
+        <h1>Confirmação:</h1>
+        <UButton
+          icon="i-heroicons-x-mark-20-solid"
+          color="gray"
+          variant="ghost"
+          @click="emit('close')"
+        />
+      </div>
     </template>
     <UForm
       :schema="schema"
@@ -25,7 +34,7 @@
             minlength="3"
           />
         </UFormGroup>
-        <UFormGroup label="Seu WhatsApp" name="telefone" class="w-full">
+        <UFormGroup label="Seu WhatsApp (opcional)" name="telefone" class="w-full">
           <UInput
             v-model="state.telefone"
             type="tel"
@@ -34,7 +43,6 @@
             v-maska="'(##) #####-####'"
             placeholder="(99) 99999-9999"
             maxlength="15"
-            minlength="15"
           />
         </UFormGroup>
         <UFormGroup
@@ -113,6 +121,7 @@
   const emit = defineEmits<{
     (e: "submit", event: any): void;
     (e: "handleRefreshAvatars"): void;
+    (e: "close"): void;
   }>();
 </script>
 

@@ -1,12 +1,15 @@
 export default defineAppConfig({
   ui: {
     primary: "neutral",
-    secondary: "gray",
+    secondary: "zinc",
+    card: {
+      background: "bg-transparent dark:bg-transparent",
+    },
     notifications: {
       position: "bottom-right",
     },
   },
   colorMode: {
-    preference: "system",
+    preference: "light",
   },
 });

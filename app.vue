@@ -1,5 +1,9 @@
 <script setup lang="ts">
+  const route = useRoute();
   const config = useRuntimeConfig();
+  const isGuestEventPage = computed(
+    () => route.path.startsWith("/evento/") && !route.path.includes("/admin/")
+  );
   useSeoMeta({
     title: "Partiu Bora?",
     description:
@@ -24,14 +28,13 @@
 <template>
   <div class="relative">
     <NuxtLoadingIndicator />
-    <Header />
+    <Header v-if="!isGuestEventPage" />
     <NuxtLayout>
-      <div class="container mx-auto px-8 pt-2 pb-8 min-h-screen z-50">
+      <div class="container mx-auto px-4 md:px-8 pt-2 pb-8 min-h-screen z-50">
         <NuxtPage />
       </div>
       <UNotifications />
     </NuxtLayout>
-    <ThemeButton />
   </div>
 </template>
 
@@ -40,9 +43,12 @@
     font-family: Belanosima, sans-serif;
   }
 
-  /* Black & white primary button overrides */
-  .bg-primary-500 { background-color: #000 !important; color: #fff !important; }
-  .hover\:bg-primary-600:hover { background-color: #1a1a1a !important; }
-  .dark .bg-primary-500 { background-color: #fff !important; color: #000 !important; }
-  .dark .hover\:bg-primary-600:hover { background-color: #e5e5e5 !important; }
+  .bg-primary-500 {
+    background-color: #000 !important;
+    color: #fff !important;
+  }
+
+  .hover\:bg-primary-600:hover {
+    background-color: #1a1a1a !important;
+  }
 </style>

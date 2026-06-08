@@ -10,10 +10,12 @@ export default function useSubmitParticipate(
   const toast = useToast();
   const schema = v.object({
     nome: v.pipe(v.string("O seu nome é obrigatório."), v.maxLength(22)),
-    telefone: v.pipe(
-      v.string("O seu telefone é obrigatório."),
-      v.minLength(15, "O telefone está incompleto."),
-      v.maxLength(15, "O telefone está incompleto.")
+    telefone: v.optional(
+      v.pipe(
+        v.string("O telefone está incompleto."),
+        v.minLength(15, "O telefone está incompleto."),
+        v.maxLength(15, "O telefone está incompleto.")
+      )
     ),
     avatarUrl: v.optional(v.string()),
   });

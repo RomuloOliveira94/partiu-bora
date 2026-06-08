@@ -40,7 +40,7 @@
       :ui="{ title: 'text-xl', icon: { base: 'h-8 w-8' } }"
     />
   </div>
-  <div v-else>
+  <div v-else class="pb-20 md:pb-0">
     <UCard>
       <template #header>
         <EventHeader :evento="evento?.evento" />
@@ -70,7 +70,25 @@
         />
       </template>
     </UCard>
-    <UModal v-model="showConfirmModal">
+    <!-- Fixed bottom bar for mobile -->
+    <div
+      class="fixed bottom-0 left-0 right-0 z-40 p-4 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 shadow-lg md:hidden"
+    >
+      <EventGuestConfirmButton
+        :isPart="isPart"
+        :config="config"
+        @confirmPresence="showConfirmModal = true"
+      />
+    </div>
+    <UModal
+      v-model="showConfirmModal"
+      :ui="{
+        overlay: { base: 'bg-gray-950/30 dark:bg-gray-950/70' },
+        background: '!bg-transparent dark:!bg-transparent',
+        ring: '',
+        shadow: ''
+      }"
+    >
       <EventGuestConfirmationForm
         :event="evento?.evento"
         :appUrl="config.public.url"
@@ -79,6 +97,7 @@
         :items="items"
         @handleRefreshAvatars="handleRefreshAvatars"
         @submit="onSubmit"
+        @close="showConfirmModal = false"
       />
     </UModal>
   </div>

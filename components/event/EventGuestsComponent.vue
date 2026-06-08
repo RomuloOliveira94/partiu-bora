@@ -19,6 +19,7 @@
                   <strong>{{ convidado.nome.slice(0, 18) }}</strong>
                 </p>
                 <p
+                  v-if="convidado.telefone"
                   class="mt-1.5 flex items-center gap-1 hover:cursor-pointer hover:text-neutral-700 dark:hover:text-neutral-300 hover:underline text-xl"
                   @click="emit('handleWhatsApp', convidado.telefone)"
                 >
