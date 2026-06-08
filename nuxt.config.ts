@@ -17,6 +17,15 @@ export default defineNuxtConfig({
       apiUrl: "",
     },
     nodeEnv: process.env.NODE_ENV,
+    // R2 config
+    r2AccountId: process.env.R2_ACCOUNT_ID,
+    r2AccessKeyId: process.env.R2_ACCESS_KEY_ID,
+    r2SecretAccessKey: process.env.R2_SECRET_ACCESS_KEY,
+    r2BucketName: process.env.R2_BUCKET_NAME,
+    r2PublicUrl: process.env.R2_PUBLIC_URL,
+  },
+  nitro: {
+    maxFileSize: 5 * 1024 * 1024, // 5MB to allow 3MB uploads with overhead
   }
   // ogImage: {
   //   defaults: {
