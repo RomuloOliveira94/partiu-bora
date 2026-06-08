@@ -65,8 +65,11 @@ export default defineEventHandler(async (event) => {
     );
 
     return { url };
-  } catch (error) {
+  } catch (error: any) {
     console.error("Erro ao fazer upload para R2:", error);
-    throw createError({ statusCode: 500, statusMessage: "Erro ao fazer upload da imagem" });
+    throw createError({
+      statusCode: 500,
+      statusMessage: "Erro ao fazer upload da imagem. Verifique os logs do servidor."
+    });
   }
 });
