@@ -8,11 +8,17 @@ export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig();
   const publicUrl = config.r2PublicUrl as string;
 
-  // Workers R2 binding — only available on Cloudflare Workers runtime
-  const STORAGE = (event.context as any).cloudflare?.env?.STORAGE;
+  // Cloudflare Pages/Workers — binding pode vir em paths diferentes
+  const storage = (event.context as any).cloudflare?.env?.STORAGE
+    || (event.context as any).cloudflare?.env?.STORAGE
+    || (event.context as any).env?.STORAGE;
 
-  if (!STORAGE) {
-    throw createError({ statusCode: 500, statusMessage: "R2 não disponível (roda em Workers?)" });
+  console.log("[R2] context keys:", Object.keys(event.context || {}));
+  console.log("[R2] cloudflare:", !!(event.context as any).cloudflare);
+  console.log("[R2] storage found:", !!storage);
+
+  if (!storage) {
+    throw createError({ statusCode: 500, statusMessage: "R2 não configurado. Configure o binding 'STORAGE' no Dashboard > Settings > Bindings." });
   }
 
   const formData = await readMultipartFormData(event);
@@ -40,7 +46,7 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    const url = await uploadToR2Storage(file.data, file.filename, file.type, STORAGE, publicUrl);
+    const url = await uploadToR2Storage(file.data, file.filename, file.type, storage, publicUrl);
     return { url };
   } catch (error) {
     console.error("Erro no upload R2:", error);
