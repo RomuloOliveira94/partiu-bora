@@ -1,0 +1,6 @@
+name = "partiu-bora"
+compatibility_date = "2024-07-30"
+
+[[r2_buckets]]
+binding = "STORAGE"
+bucket_name = "partiu-bora-storage"
