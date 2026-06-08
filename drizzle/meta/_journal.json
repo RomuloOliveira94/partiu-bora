@@ -15,6 +15,13 @@
       "when": 1728505752424,
       "tag": "0001_spicy_golden_guardian",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1780931363621,
+      "tag": "0002_large_talkback",
+      "breakpoints": true
     }
   ]
 }

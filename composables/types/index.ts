@@ -5,6 +5,7 @@ export interface Response {
       nome: string;
       data: number;
       local: string;
+      descricao?: string;
       imageUrl: string;
       linkPublico: string;
       linkAdmin: string;

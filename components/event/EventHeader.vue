@@ -31,6 +31,9 @@
           <strong>Local: </strong>
           {{ evento.local }}
         </p>
+        <p v-if="evento.descricao" class="mt-2 text-base text-gray-600 dark:text-gray-400 whitespace-pre-wrap">
+          {{ evento.descricao }}
+        </p>
       </div>
     </div>
     <NuxtImg

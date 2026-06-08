@@ -15,6 +15,7 @@
     nome: "",
     data: 0,
     local: "",
+    descricao: "",
     registranteNome: "",
     registranteWhatsApp: "",
     quantidadeMaxima: 0,
@@ -37,6 +38,7 @@
     evento: v.string("O nome do evento é obrigatório."),
     data: v.string("A data do evento é obrigatória."),
     local: v.optional(v.string()),
+    descricao: v.optional(v.pipe(v.string(), v.maxLength(1000, "Descrição deve ter no máximo 1000 caracteres"))),
     quantidadeMaxima: v.optional(v.string()),
     registrante: v.string("O seu nome é obrigatório."),
     registranteWhatsApp: v.string("O seu WhatsApp é obrigatório."),
@@ -49,6 +51,7 @@
     evento: undefined as string | undefined,
     local: undefined as string | undefined,
     data: undefined as string | undefined,
+    descricao: undefined as string | undefined,
     quantidadeMaxima: undefined as string | undefined,
     registrante: undefined as string | undefined,
     registranteWhatsApp: undefined as string | undefined,
@@ -167,6 +170,7 @@
       eventCreatedData.nome = criar.body.data.nome;
       eventCreatedData.data = criar.body.data.data;
       eventCreatedData.local = criar.body.data.local;
+      eventCreatedData.descricao = criar.body.data.descricao;
       eventCreatedData.registranteNome = criar.body.data.registranteNome;
       eventCreatedData.registranteWhatsApp = criar.body.data.registranteWhatsApp;
       eventCreatedData.quantidadeMaxima = criar.body.data.quantidadeMaxima;
@@ -190,6 +194,7 @@
     state.evento = "Evento teste";
     state.data = "2022-12-31T23:59";
     state.local = "Local teste";
+    state.descricao = "Venha celebrar com a gente!";
     state.registrante = "Fulano";
     state.registranteWhatsApp = "(99) 99999-9999";
     state.quantidadeMaxima = "112";
@@ -286,6 +291,19 @@
           v-maska="'######'"
           placeholder="Digite a quantidade máxima"
         />
+      </UFormGroup>
+
+      <UFormGroup label="Descrição (opcional)" name="descricao">
+        <UTextarea
+          v-model="state.descricao"
+          size="sm"
+          placeholder="Descreva seu evento..."
+          :maxlength="1000"
+          :rows="4"
+        />
+        <template #help>
+          {{ (state.descricao || '').length }}/1000 caracteres
+        </template>
       </UFormGroup>
 
       <UFormGroup label="Imagem para o evento (opcional)" name="imageUrl">

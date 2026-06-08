@@ -6,6 +6,7 @@ interface IBody {
   data: {
     evento: string;
     local: string;
+    descricao?: string;
     registrante: string;
     registranteWhatsApp: string;
     quantidadeMaxima: number;
@@ -25,6 +26,7 @@ export default defineEventHandler<{ body: IBody }>(async (event) => {
 
   let nome = body.data.evento;
   let local = body.data.local;
+  let descricao = body.data.descricao;
   let registranteNome = body.data.registrante;
   let registranteWhatsApp = body.data.registranteWhatsApp;
   let quantidadeMaxima = body.data.quantidadeMaxima;
@@ -51,6 +53,7 @@ export default defineEventHandler<{ body: IBody }>(async (event) => {
   const eventData: NovoEvento = {
     nome,
     local,
+    descricao,
     registranteNome,
     registranteWhatsApp,
     quantidadeMaxima,
