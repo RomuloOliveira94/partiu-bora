@@ -1,6 +1,5 @@
 <template>
   <UCard
-    class="!bg-transparent dark:!bg-transparent"
     :ui="{
       ring: '',
       divide: 'divide-y divide-gray-100 dark:divide-gray-800',

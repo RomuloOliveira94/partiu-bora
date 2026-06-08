@@ -84,7 +84,6 @@
       v-model="showConfirmModal"
       :ui="{
         overlay: { base: 'bg-gray-950/30 dark:bg-gray-950/70' },
-        background: '!bg-transparent dark:!bg-transparent',
         ring: '',
         shadow: ''
       }"
