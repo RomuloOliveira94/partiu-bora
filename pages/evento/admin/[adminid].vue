@@ -18,6 +18,10 @@
       >
     </div>
 
+    <div class="flex justify-end mb-4">
+      <UButton icon="i-heroicons-pencil-square" @click="showEditModal = true">Editar</UButton>
+    </div>
+
     <UCard>
       <template #header>
         <EventHeader :evento="evento?.evento" />
@@ -32,11 +36,25 @@
         <EventShareLinks :evento="evento.evento" :appUrl="appUrl" />
       </template>
     </UCard>
+
+    <UModal v-model="showEditModal">
+      <UCard>
+        <template #header>
+          <h2 class="text-xl font-bold">Editar Evento</h2>
+        </template>
+        <EventForm
+          mode="edit"
+          :initialData="editInitialData"
+          submitLabel="Salvar Alterações"
+          @submit="onUpdateEvent"
+        />
+      </UCard>
+    </UModal>
   </div>
 </template>
 
 <script setup lang="ts">
-  import { ref } from "vue";
+  import { ref, computed } from "vue";
   import useFetchAdminEvent from "~/composables/UseFetchAdminEvent";
   import { handleWhatsApp } from "~/helpers";
 
@@ -49,6 +67,34 @@
   const { res } = await useFetchAdminEvent(adminid);
   const evento = ref(res);
   useMetaTags(evento.value?.evento);
+
+  const showEditModal = ref(false);
+
+  const editInitialData = computed(() => {
+    const ev = evento.value?.evento;
+    if (!ev) return {};
+    return {
+      nome: ev.nome,
+      local: ev.local || "",
+      descricao: ev.descricao || "",
+      data: ev.data,
+      quantidadeMaxima: ev.quantidadeMaxima?.toString() || "",
+      imageUrl: ev.imageUrl || "",
+    };
+  });
+
+  async function onUpdateEvent(submitData: any) {
+    const res = await $fetch(`/api/admin/${adminid.value}`, {
+      method: "PUT",
+      body: JSON.stringify(submitData),
+    });
+
+    if (res.statusCode === 200) {
+      evento.value.evento = { ...evento.value.evento, ...res.body.data };
+      showEditModal.value = false;
+      toast.add({ title: "Evento atualizado!", icon: "i-heroicons-check-circle" });
+    }
+  }
 
   const desconvidar = async (id: number) => {
     if (!evento?.value?.evento) return;
