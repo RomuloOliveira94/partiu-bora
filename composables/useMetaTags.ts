@@ -14,6 +14,7 @@ export default function useMetaTags(evento: Response["evento"] | undefined) {
   );
   const ogType = ref<"website">("website");
   const ogUrl = ref(`${config.public.url}/evento/${evento.linkPublico}`);
+  const ogImage = ref(evento.imageUrl || `${config.public.url}/images/og-image.png`);
   const twitterCard = ref<"summary_large_image">("summary_large_image");
 
   // defineOgImageComponent("ShareEvent", {
@@ -30,6 +31,7 @@ export default function useMetaTags(evento: Response["evento"] | undefined) {
     ogDescription,
     ogUrl,
     ogType,
+    ogImage,
     twitterCard,
   });
 }

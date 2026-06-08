@@ -37,11 +37,13 @@
             <span class="text-sm font-medium"> Já tenho um evento </span>
           </UButton>
 
-          <UButton
-            class="inline-block rounded px-3 py-3 text-sm font-medium text-white transition focus:outline-none focus:ring"
-            type="button"
-            v-if="router.currentRoute.value.path !== '/'"
-          >
+            <MyEventsButton />
+
+            <UButton
+              class="inline-block rounded px-3 py-3 text-sm font-medium text-white transition focus:outline-none focus:ring"
+              type="button"
+              v-if="router.currentRoute.value.path !== '/'"
+            >
             <NuxtLink to="/">Criar um evento</NuxtLink>
           </UButton>
         </div>

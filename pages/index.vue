@@ -1,13 +1,14 @@
 <script setup lang="ts">
+  import { onUnmounted } from "vue";
   import type { FormSubmitEvent } from "#ui/types";
   import { vMaska } from "maska/vue";
   import * as v from "valibot";
   import type { Evento } from "~/server/db/schema";
-  import { images } from "~/helpers/static";
-
   const config = useRuntimeConfig();
   const appUrl = config.public.url;
-  const showImgs = ref(false);
+  const toast = useToast();
+
+  const myEvents = useMyEvents();
 
   const eventCreated = ref(false);
   const eventCreatedData = reactive<Evento>({
@@ -23,6 +24,14 @@
     dataDaCriacao: 0,
     id: 0,
   });
+
+  // File upload state
+  const selectedFile = ref<File | null>(null);
+  const filePreview = ref<string | null>(null);
+  const isUploading = ref(false);
+  const fileInputRef = ref<HTMLInputElement | null>(null);
+
+  const MAX_FILE_SIZE = 3 * 1024 * 1024; // 3MB
 
   const schema = v.object({
     evento: v.string("O nome do evento é obrigatório."),
@@ -46,10 +55,111 @@
     imageUrl: undefined as string | undefined,
   });
 
+  function triggerFileInput() {
+    fileInputRef.value?.click();
+  }
+
+  function handleFileChange(event: Event) {
+    const target = event.target as HTMLInputElement;
+    const file = target.files?.[0];
+
+    if (!file) return;
+
+    // Validate file type
+    const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
+    if (!ALLOWED_TYPES.includes(file.type)) {
+      toast.add({
+        title: "Tipo de arquivo não suportado",
+        description: "Use JPEG, PNG, WebP ou GIF",
+        color: "error",
+      });
+      return;
+    }
+
+    // Validate file size
+    if (file.size > MAX_FILE_SIZE) {
+      toast.add({
+        title: "Imagem muito grande",
+        description: "O tamanho máximo é 3MB",
+        color: "error",
+      });
+      return;
+    }
+
+    selectedFile.value = file;
+    // Create preview URL
+    filePreview.value = URL.createObjectURL(file);
+    state.imageUrl = undefined; // Clear static image if any
+  }
+
+  function clearFile() {
+    selectedFile.value = null;
+    if (filePreview.value) {
+      URL.revokeObjectURL(filePreview.value);
+      filePreview.value = null;
+    }
+    state.imageUrl = undefined;
+    if (fileInputRef.value) {
+      fileInputRef.value.value = "";
+    }
+  }
+
+  onUnmounted(() => {
+    if (filePreview.value) {
+      URL.revokeObjectURL(filePreview.value);
+    }
+  });
+
   async function onSubmit(event: FormSubmitEvent<Schema>) {
+    let imageUrlToSend = state.imageUrl || "";
+
+    // If a file was selected, upload it first
+    if (selectedFile.value) {
+      isUploading.value = true;
+      try {
+        const formData = new FormData();
+        formData.append("file", selectedFile.value);
+
+        const uploadRes = await $fetch<{ url?: string; message?: string }>("/api/upload", {
+          method: "POST",
+          body: formData,
+        });
+
+        if (uploadRes.url) {
+          imageUrlToSend = uploadRes.url;
+        } else {
+          toast.add({
+            title: "Erro no upload",
+            description: uploadRes.message || "Não foi possível fazer upload da imagem",
+            color: "error",
+          });
+          isUploading.value = false;
+          return;
+        }
+      } catch (error: any) {
+        const message = error?.data?.message || error?.statusMessage || "Não foi possível fazer upload da imagem";
+        toast.add({
+          title: "Erro no upload",
+          description: message,
+          color: "error",
+        });
+        isUploading.value = false;
+        return;
+      }
+      isUploading.value = false;
+    }
+
+    // Submit event with the image URL
+    const submitData = {
+      data: {
+        ...event.data,
+        imageUrl: imageUrlToSend,
+      },
+    };
+
     const criar = await $fetch("/api", {
       method: "POST",
-      body: JSON.stringify(event),
+      body: JSON.stringify(submitData),
     });
 
     if (criar.statusCode === 200) {
@@ -64,17 +174,15 @@
       eventCreatedData.imageUrl = criar.body.data.imageUrl;
       eventCreatedData.dataDaCriacao = criar.body.data.dataDaCriacao;
       eventCreatedData.id = criar.body.data.id;
+      // Save to My Events
+      myEvents.addEvent({
+        adminId: criar.body.data.linkAdmin,
+        publicId: criar.body.data.linkPublico,
+        nome: criar.body.data.nome,
+        data: criar.body.data.data,
+      })
       eventCreated.value = true;
     }
-  }
-
-  function handleSelect(item: string) {
-    if (state.imageUrl === item) {
-      state.imageUrl = undefined;
-      return;
-    }
-
-    state.imageUrl = item;
   }
 
   function devButton() {
@@ -83,7 +191,6 @@
     state.local = "Local teste";
     state.registrante = "Fulano";
     state.registranteWhatsApp = "(99) 99999-9999";
-    state.imageUrl = images[0];
     state.quantidadeMaxima = "112";
   }
 </script>
@@ -181,43 +288,47 @@
       </UFormGroup>
 
       <UFormGroup label="Imagem para o evento (opcional)" name="imageUrl">
-        <template #label>
-          <div
-            class="flex items-start flex-col justify-center md:flex-row md:items-center gap-4 mb-2"
+        <input
+          ref="fileInputRef"
+          type="file"
+          accept="image/*"
+          class="hidden"
+          @change="handleFileChange"
+        />
+        <div class="flex flex-col gap-3">
+          <UButton
+            @click="triggerFileInput"
+            :icon="selectedFile ? 'i-heroicons-check-circle' : 'i-heroicons-photo-16-solid'"
+            :color="selectedFile ? 'success' : 'primary'"
+            trailing
+            size="sm"
+            class="text-sm font-semibold w-fit"
           >
-            Imagem para o evento (opcional)
-            <div>
+            {{ selectedFile ? selectedFile.name : "Selecionar imagem" }}
+          </UButton>
+          <div v-if="selectedFile" class="flex items-center gap-3">
+            <img
+              v-if="filePreview"
+              :src="filePreview"
+              alt="Preview"
+              class="w-24 h-24 object-cover rounded-md border"
+            />
+            <div class="flex flex-col gap-1">
+              <span class="text-sm text-gray-600 dark:text-gray-400">
+                {{ (selectedFile.size / 1024).toFixed(1) }} KB
+              </span>
               <UButton
-                @click="
-                  showImgs = !showImgs;
-                  state.imageUrl = '';
-                "
-                :icon="
-                  showImgs
-                    ? 'zondicons:close-outline'
-                    : 'i-heroicons-photo-16-solid'
-                "
-                trailing
-                size="md"
-                class="text-sm font-semibold"
-                >{{
-                  showImgs ? "Esconder imagens" : "Mostrar imagens"
-                }}</UButton
+                @click="clearFile"
+                icon="i-heroicons-x-circle"
+                color="error"
+                variant="ghost"
+                size="xs"
               >
+                Remover
+              </UButton>
             </div>
           </div>
-        </template>
-        <UCarousel v-if="showImgs" v-slot="{ item }" :items="images" arrows>
-          <img
-            @click="handleSelect(item)"
-            :src="item"
-            :class="
-              item === state.imageUrl ? 'border-8 border-neutral-900 dark:border-neutral-100 shadow-lg' : ''
-            "
-            class="cursor-pointer hover:border-neutral-900 dark:hover:border-neutral-100 hover:border-8 rounded-md mx-1 md:w-[250px] w-[250px] h-full object-cover"
-            draggable="false"
-          />
-        </UCarousel>
+        </div>
       </UFormGroup>
       <div class="flex justify-center md:justify-start">
         <UButton
@@ -226,8 +337,10 @@
           size="xl"
           class="text-xl font-semibold mt-8"
           trailing
+          :loading="isUploading"
+          :disabled="isUploading"
         >
-          Criar Evento!
+          {{ isUploading ? "Enviando imagem..." : "Criar Evento!" }}
         </UButton>
       </div>
     </UForm>
