@@ -28,7 +28,9 @@ export default defineEventHandler<{ body: IBody }>(async (event) => {
   let registranteNome = body.data.registrante;
   let registranteWhatsApp = body.data.registranteWhatsApp;
   let quantidadeMaxima = body.data.quantidadeMaxima;
-  const dataTimestamp = new Date(body.data.data).getTime();
+  const dataTimestamp = typeof body.data.data === "number"
+    ? body.data.data
+    : new Date(body.data.data).getTime();
   let imageUrl = body.data.imageUrl;
   let data = dataTimestamp;
   let linkPublico = nanoid(10);

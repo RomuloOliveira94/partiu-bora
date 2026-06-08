@@ -153,6 +153,7 @@
     const submitData = {
       data: {
         ...event.data,
+        data: event.data.data ? new Date(event.data.data).getTime() : 0,
         imageUrl: imageUrlToSend,
       },
     };
