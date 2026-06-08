@@ -6,6 +6,22 @@ export default defineNuxtConfig({
       htmlAttrs: {
         'data-color-mode-forced': 'light',
       },
+      script: [
+        {
+          innerHTML: `
+            (function(){
+              var keys = ['nuxt-color-mode', 'nuxt-ui-color-mode', 'color-mode'];
+              for (var i = 0; i < keys.length; i++) {
+                try { localStorage.removeItem(keys[i]); } catch(e) {}
+              }
+              var h = document.documentElement;
+              h.classList.remove('dark');
+              h.setAttribute('data-color-mode-forced', 'light');
+            })();
+          `,
+          type: 'text/javascript',
+        },
+      ],
     },
   },
   devtools: { enabled: process.env.NODE_ENV !== 'production' },
