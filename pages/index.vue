@@ -96,8 +96,7 @@
   <UCard>
     <template #header>
       <h1 class="md:text-2xl text-xl font-semibold">
-        Crie seu evento ou compromisso (É gratis!
-        <UIcon name="emojione-v1:winking-face" />):
+        Crie seu evento ou compromisso (Grátis)
       </h1>
     </template>
 
@@ -213,9 +212,9 @@
             @click="handleSelect(item)"
             :src="item"
             :class="
-              item === state.imageUrl ? 'border-8 border-primary shadow-lg' : ''
+              item === state.imageUrl ? 'border-8 border-neutral-900 dark:border-neutral-100 shadow-lg' : ''
             "
-            class="cursor-pointer hover:border-primary hover:border-8 rounded-md mx-1 md:w-[250px] w-[250px] h-full object-cover"
+            class="cursor-pointer hover:border-neutral-900 dark:hover:border-neutral-100 hover:border-8 rounded-md mx-1 md:w-[250px] w-[250px] h-full object-cover"
             draggable="false"
           />
         </UCarousel>

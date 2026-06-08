@@ -1,12 +1,12 @@
 export default defineAppConfig({
   ui: {
-    primary: "sky",
-    secondary: "cool",
+    primary: "neutral",
+    secondary: "gray",
     notifications: {
       position: "bottom-right",
     },
   },
   colorMode: {
-    preference: "light",
+    preference: "system",
   },
 });

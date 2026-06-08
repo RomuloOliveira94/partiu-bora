@@ -16,7 +16,6 @@
             class="text-2xl md:text-3xl font-semibold leading-6 text-gray-900 dark:text-white"
           >
             Evento criado com sucesso!
-            <UIcon name="twemoji:party-popper" class="ml-1" />
           </h2>
           <UButton
             color="gray"

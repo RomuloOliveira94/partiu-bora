@@ -13,7 +13,7 @@
           >Criado por: <strong>{{ evento.registranteNome }}</strong></small
         >
         <small
-          class="flex items-center gap-1 text-md hover:text-blue-500 hover:underline cursor-pointer"
+          class="flex items-center gap-1 text-md hover:text-neutral-700 dark:hover:text-neutral-300 hover:underline cursor-pointer"
           @click="handleWhatsApp(evento.registranteWhatsApp)"
         >
           <UIcon name="i-logos:whatsapp-icon" class="w-6 h-6" />
@@ -22,12 +22,12 @@
       </div>
       <div>
         <p class="text-lg">
-          <UIcon name="twemoji:spiral-calendar" class="w-4 h-4 mr-1" />
+          <UIcon name="i-heroicons-calendar-days-16-solid" class="w-4 h-4 mr-1" />
           <strong>Data: </strong>
           {{ formatDateTime(evento.data) }}
         </p>
         <p class="text-lg">
-          <UIcon name="twemoji:round-pushpin" class="w-4 h-4 mr-1" />
+          <UIcon name="i-heroicons-map-pin-16-solid" class="w-4 h-4 mr-1" />
           <strong>Local: </strong>
           {{ evento.local }}
         </p>

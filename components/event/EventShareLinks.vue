@@ -60,9 +60,9 @@
               color="primary"
               variant="outline"
               class="my-2 flex items-center justify-between"
-              @click="handleCopy(evento.linkPublico)"
+              @click="handleCopy(evento.linkAdmin)"
             >
-              <strong>{{ evento.linkPublico }}</strong>
+              <strong>{{ evento.linkAdmin }}</strong>
               <UIcon
                 name="i-heroicons-clipboard-20-solid"
                 class="w-4 h-4 ml-1"

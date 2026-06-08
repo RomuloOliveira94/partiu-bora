@@ -4,14 +4,14 @@
   const { showEventSearch, state, schema, onSubmit } = useSearchEvent();
 </script>
 <template>
-  <header class="border-b border-gray-200 border-opacity-10 bg-transparent">
-    <div class="container mx-auto py-8 sm:px-6 sm:py-12 p-8">
+  <header class="border-b border-gray-200 dark:border-neutral-800 border-opacity-10 bg-transparent">
+    <div class="container mx-auto py-4 sm:py-6 px-8">
       <div
         class="flex flex-col items-start gap-4 md:flex-row md:items-center md:justify-between"
       >
         <div>
           <Logo @navigate="navigateHome" />
-          <div class="mt-6">
+          <div class="mt-2">
             <p class="mt-1.5 md:text-lg">
               Organize um evento ou compromisso de forma simples e rápida, e
               convide seus amigos para participar.

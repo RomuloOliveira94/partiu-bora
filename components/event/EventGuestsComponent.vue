@@ -19,7 +19,7 @@
                   <strong>{{ convidado.nome.slice(0, 18) }}</strong>
                 </p>
                 <p
-                  class="mt-1.5 flex items-center gap-1 hover:cursor-pointer hover:text-blue-500 hover:underline text-xl"
+                  class="mt-1.5 flex items-center gap-1 hover:cursor-pointer hover:text-neutral-700 dark:hover:text-neutral-300 hover:underline text-xl"
                   @click="emit('handleWhatsApp', convidado.telefone)"
                 >
                   <UIcon name="i-logos:whatsapp-icon" class="w-5 h-5" />

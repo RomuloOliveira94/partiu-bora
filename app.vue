@@ -26,7 +26,7 @@
     <NuxtLoadingIndicator />
     <Header />
     <NuxtLayout>
-      <div class="container mx-auto p-8 min-h-screen z-50">
+      <div class="container mx-auto px-8 pt-2 pb-8 min-h-screen z-50">
         <NuxtPage />
       </div>
       <UNotifications />
@@ -39,4 +39,10 @@
   div {
     font-family: Belanosima, sans-serif;
   }
+
+  /* Black & white primary button overrides */
+  .bg-primary-500 { background-color: #000 !important; color: #fff !important; }
+  .hover\:bg-primary-600:hover { background-color: #1a1a1a !important; }
+  .dark .bg-primary-500 { background-color: #fff !important; color: #000 !important; }
+  .dark .hover\:bg-primary-600:hover { background-color: #e5e5e5 !important; }
 </style>

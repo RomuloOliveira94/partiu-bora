@@ -11,7 +11,7 @@
     <h1
       class="text-8xl font-bold sm:text-3xl hover:text-primary cursor-pointer tw-flex tw-items-center tw-gap-2"
     >
-      Partiu Bora? 👋
+      Partiu Bora?
     </h1>
     <div class="grid font-semibold">
       <p class="text-6xl">
