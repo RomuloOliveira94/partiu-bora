@@ -8,6 +8,8 @@
   const appUrl = config.public.url;
   const toast = useToast();
 
+  const myEvents = useMyEvents();
+
   const eventCreated = ref(false);
   const eventCreatedData = reactive<Evento>({
     nome: "",
@@ -64,10 +66,11 @@
     if (!file) return;
 
     // Validate file type
-    if (!file.type.startsWith("image/")) {
+    const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
+    if (!ALLOWED_TYPES.includes(file.type)) {
       toast.add({
         title: "Tipo de arquivo não suportado",
-        description: "Selecione uma imagem (JPEG, PNG, WebP ou GIF)",
+        description: "Use JPEG, PNG, WebP ou GIF",
         color: "error",
       });
       return;
@@ -172,7 +175,7 @@
       eventCreatedData.dataDaCriacao = criar.body.data.dataDaCriacao;
       eventCreatedData.id = criar.body.data.id;
       // Save to My Events
-      useMyEvents().addEvent({
+      myEvents.addEvent({
         adminId: criar.body.data.linkAdmin,
         publicId: criar.body.data.linkPublico,
         nome: criar.body.data.nome,

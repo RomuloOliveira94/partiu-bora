@@ -25,8 +25,15 @@ export default defineNuxtConfig({
     r2PublicUrl: process.env.R2_PUBLIC_URL,
   },
   nitro: {
-    maxFileSize: 5 * 1024 * 1024, // 5MB to allow 3MB uploads with overhead
-  }
+    routeRules: {
+      "/api/upload": {
+        bodySize: 5 * 1024 * 1024, // 5MB
+      },
+    },
+  },
+  image: {
+    domains: [process.env.R2_PUBLIC_URL ? new URL(process.env.R2_PUBLIC_URL).hostname : ""],
+  },
   // ogImage: {
   //   defaults: {
   //     emojis: "twemoji",
